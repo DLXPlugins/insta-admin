@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'DLXPlugins\\HAS\\' => array($baseDir . '/php'),
+    'DLXPlugins\\InstaAdmin\\' => array($baseDir . '/php'),
 );

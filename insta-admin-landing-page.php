@@ -65,6 +65,14 @@ class Insta_Admin_DLX {
 		// i18n initialization.
 		load_plugin_textdomain( 'insta-admin-landing-page', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
+		// Load the admin landing page functionality.
+		$admin_landing = new Admin_Landing();
+		$admin_landing->run();
+
+		// For plugin admin settings.
+		$admin = new Admin();
+		$admin->run();
+
 	}
 }
 

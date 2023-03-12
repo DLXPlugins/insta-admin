@@ -1,24 +1,24 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
+    'pretty_version' => 'dev-development',
+    'version' => 'dev-development',
     'aliases' => 
     array (
     ),
-    'reference' => 'e19ee7697db895cd75bd9c2f260df51c75eb7c48',
-    'name' => 'dlxplugins/highlight-and-share',
+    'reference' => 'bb38c2acba30b4157c8db74e2f7efd571e2a7bc5',
+    'name' => 'dlxplugins/instaadmin',
   ),
   'versions' => 
   array (
-    'dlxplugins/highlight-and-share' => 
+    'dlxplugins/instaadmin' => 
     array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
+      'pretty_version' => 'dev-development',
+      'version' => 'dev-development',
       'aliases' => 
       array (
       ),
-      'reference' => 'e19ee7697db895cd75bd9c2f260df51c75eb7c48',
+      'reference' => 'bb38c2acba30b4157c8db74e2f7efd571e2a7bc5',
     ),
   ),
 );

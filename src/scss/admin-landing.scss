@@ -1,0 +1,24 @@
+@import 'breakpoints-mixin.scss';
+@import 'common.scss';
+@import '../../node_modules/@wordpress/components/build-style/style.css';
+
+/* Make interface full-width/full-height */
+#wpcontent {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	position: relative;
+	background-color: #ebebeb;
+
+	.quotes-dlx-plugin {
+		margin: 0;
+	}
+}
+
+#wpbody-content {
+	padding: 0;
+	margin: 0;
+}
+
+#wpfooter {
+	display: none;
+}

@@ -4,17 +4,17 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf687c17cff0f481f8e019006b201c903
+class ComposerStaticInit9cb3d0c993a094f227e0d2f0ce1ee257
 {
     public static $prefixLengthsPsr4 = array (
         'D' => 
         array (
-            'DLXPlugins\\HAS\\' => 15,
+            'DLXPlugins\\InstaAdmin\\' => 22,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'DLXPlugins\\HAS\\' => 
+        'DLXPlugins\\InstaAdmin\\' => 
         array (
             0 => __DIR__ . '/../..' . '/php',
         ),
@@ -27,9 +27,9 @@ class ComposerStaticInitf687c17cff0f481f8e019006b201c903
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf687c17cff0f481f8e019006b201c903::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf687c17cff0f481f8e019006b201c903::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitf687c17cff0f481f8e019006b201c903::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9cb3d0c993a094f227e0d2f0ce1ee257::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9cb3d0c993a094f227e0d2f0ce1ee257::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9cb3d0c993a094f227e0d2f0ce1ee257::$classMap;
 
         }, null, ClassLoader::class);
     }

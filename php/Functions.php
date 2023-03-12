@@ -2,7 +2,7 @@
 /**
  * Helper functions for the plugin.
  *
- * @package HAS
+ * @package InstaAdmin
  */
 
 namespace DLXPlugins\InstaAdmin;
@@ -79,6 +79,57 @@ class Functions {
 			}
 		}
 		return new \WP_Error( 'has_dlx_attribute_not_found', __( 'Attribute not found.', 'insta-admin-landing-page' ) );
+	}
+
+	/**
+	 * Get a landing page menu slug.
+	 */
+	public static function get_landing_page_slug() {
+		$landing_page_slug = 'insta-admin';
+		/**
+		 * Filter the slug for the admin landing page.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $landing_page_slug The slug for the admin landing page.
+		 */
+		$landing_page_slug = apply_filters( 'insta_admin_landing_page_slug', $landing_page_slug );
+
+		return $landing_page_slug;
+	}
+
+	/**
+	 * Get a landing page title.
+	 */
+	public static  function get_landing_page_title() {
+		$landing_page_title = __( 'Site Features', 'insta-admin-landing-page' );
+		/**
+		 * Filter the title for the admin landing page.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $landing_page_title The title for the admin landing page.
+		 */
+		$landing_page_title = apply_filters( 'insta_admin_landing_page_title', $landing_page_title );
+
+		return $landing_page_title;
+	}
+
+	/**
+	 * Get a landing page menu title.
+	 */
+	public static  function get_landing_page_menu_title() {
+		$landing_page_menu_title = __( 'Site Features', 'insta-admin-landing-page' );
+		/**
+		 * Filter the menu title for the admin landing page.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $landing_page_menu_title The menu title for the admin landing page.
+		 */
+		$landing_page_menu_title = apply_filters( 'insta_admin_landing_page_menu_title', $landing_page_menu_title );
+
+		return $landing_page_menu_title;
 	}
 
 	/**

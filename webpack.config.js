@@ -15,26 +15,7 @@ module.exports = ( env ) => {
 		},
 		{
 			entry: {
-				'has-cts-editor': './src/blocks/editor.scss',
-				'has-cts-style': './src/blocks/style.scss',
-				'has-admin-style': './src/admin.scss',
-				'has-admin': [ './src/admin.js' ],
-				'has-admin-settings': [ './src/react/Settings/index.js' ],
-				'has-admin-appearance': [ './src/react/Appearance/index.js' ],
-				'has-admin-block-editor': [ './src/react/BlockEditor/index.js' ],
-				'has-admin-emails': [ './src/react/Emails/index.js' ],
-				'has-email-modal': [ './src/react/EmailModal/index.js', './src/react/EmailModal/style.scss' ],
-				'has-themes': [ './src/themes.scss' ],
-				'has-gfont-josefin-sans': { import: './src/scss/fonts/josefin-sans.scss' },
-				'has-gfont-karla': { import: './src/scss/fonts/karla.scss' },
-				'has-gfont-lato': { import: './src/scss/fonts/lato.scss' },
-				'has-gfont-montserrat': { import: './src/scss/fonts/montserrat.scss' },
-				'has-gfont-open-sans': { import: './src/scss/fonts/open-sans.scss' },
-				'has-gfont-playfair-display': { import: './src/scss/fonts/playfair-display.scss' },
-				'has-gfont-raleway': { import: './src/scss/fonts/raleway.scss' },
-				'has-gfont-roboto': { import: './src/scss/fonts/roboto.scss' },
-				'has-gfont-source-sans-pro': { import: './src/scss/fonts/source-sans-pro.scss' },
-				'insta-admin-landing-page': [ './src/frontendjs/highlight-and-share.js' ],
+				'insta-admin-landing-page': [ './src/scss/admin-landing.scss' ],
 			},
 			mode: env.mode,
 			devtool: 'production' === env.mode ? false : 'source-map',
@@ -48,7 +29,6 @@ module.exports = ( env ) => {
 				alias: {
 					react: path.resolve( 'node_modules/react' ),
 					'react-dom': path.resolve( 'node_modules/react-dom' ),
-					lodash: path.resolve( 'node_modules/lodash' ),
 					'@wordpress/i18n': path.resolve( 'node_modules/@wordpress/i18n' ),
 					'@wordpress/element': path.resolve( 'node_modules/@wordpress/element' ),
 					'@wordpress/components': path.resolve( 'node_modules/@wordpress/components' ),
@@ -99,11 +79,6 @@ module.exports = ( env ) => {
 					{
 						test: /\.css$/,
 						include: [
-							path.resolve(
-								__dirname,
-								'node_modules/photoswipe/dist/photoswipe.css'
-							),
-							path.resolve( __dirname, './src/photoswipe-caption.css' ),
 							path.resolve(
 								__dirname,
 								'node_modules/@wordpress/components/build-style/style.css'
