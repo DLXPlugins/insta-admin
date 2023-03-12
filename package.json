@@ -5,9 +5,8 @@
 	"main": "index.js",
 	"sideEffects": false,
 	"scripts": {
-		"start": "wp-scripts start --env mode=development",
-		"dev": "wp-scripts start --env mode=development",
-		"build": "wp-scripts build --env mode=production"
+		"start": "wp-scripts start landing-page-block-sidebar=./src/plugins/landing/index.js --env mode=development",
+		"build": "wp-scripts build landing-page-block-sidebar=./src/plugins/landing/index.js --env mode=production"
 	},
 	"repository": {
 		"type": "git",

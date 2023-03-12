@@ -26,6 +26,9 @@ class Admin_Landing {
 		// Initialize post types.
 		add_action( 'init', array( $this, 'add_post_types' ) );
 
+		// Register landing page sidebar meta options.
+		add_action( 'init', array( $this, 'register_meta_boxes' ) );
+
 		// Redirect to landing page if on the post type list table.
 		add_action( 'wp', array( $this, 'redirect_to_landing_page_edit_screen' ) );
 
@@ -43,6 +46,9 @@ class Admin_Landing {
 
 		// Add body class to landing page admin.
 		add_action( 'admin_body_class', array( $this, 'add_admin_body_class' ) );
+
+		// Add sidebar JS to landing page post type edit screen.
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 	}
 
 	/**
@@ -130,7 +136,7 @@ class Admin_Landing {
 				'show_in_menu' => false,
 				'show_in_rest' => true,
 				'rewrite'      => false,
-				'supports'     => array( 'title', 'editor', 'revisions' ),
+				'supports'     => array( 'title', 'editor', 'revisions', 'custom-fields' ),
 			)
 		);
 
@@ -258,6 +264,26 @@ class Admin_Landing {
 	}
 
 	/**
+	 * Enqueue the sidebar scripts needed on the landing page post edit screen.
+	 */
+	public function enqueue_block_editor_assets() {
+		// Ensure we're in the correct post type.
+		$screen = get_current_screen();
+		if ( 'insta_admin_landing' !== $screen->post_type ) {
+			return;
+		}
+
+		// Enqueue the sidebar JS.
+		wp_enqueue_script(
+			'insta-admin-landing-page-sidebar',
+			Functions::get_plugin_url( '/build/landing-page-block-sidebar.js' ),
+			array(),
+			Functions::get_plugin_version(),
+			true
+		);
+	}
+
+	/**
 	 * Get the landing page ID.
 	 *
 	 * @return int
@@ -371,5 +397,46 @@ class Admin_Landing {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Register Meta Boxes for the landing page sidebar.
+	 */
+	public function register_meta_boxes() {
+		/**
+		 * Meta for a fullscreen or traditional admin.
+		 */
+		register_post_meta(
+			'insta_admin_landing',
+			'_ialp_full_screen',
+			array(
+				'sanitize_callback' => 'rest_sanitize_boolean',
+				'show_in_rest'      => true,
+				'type'              => 'boolean',
+				'auth_callback'     => function () {
+					return current_user_can( 'manage_options' );
+				},
+				'single'            => true,
+				'default'           => true,
+			)
+		);
+
+		/**
+		 * Meta for enabling full screen view..
+		 */
+		// register_post_meta(
+		// 	'page',
+		// 	'_bl_nav_type', /* can be: main, alt */
+		// 	array(
+		// 		'sanitize_callback' => 'sanitize_text_field',
+		// 		'show_in_rest'      => true,
+		// 		'type'              => 'string',
+		// 		'auth_callback'     => function () {
+		// 			return current_user_can( 'edit_posts' );
+		// 		},
+		// 		'single'            => true,
+		// 		'default'           => 'main',
+		// 	)
+		// );
 	}
 }
