@@ -5,7 +5,7 @@
  * @package HAS
  */
 
-namespace DLXPlugins\HAS;
+namespace DLXPlugins\InstaAdmin;
 
 /**
  * Class Admin
@@ -65,10 +65,10 @@ class Admin {
 	 * @return array $links Array of plugin options
 	 */
 	public function add_settings_link( $links ) {
-		$settings_link   = sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'options-general.php?page=highlight-and-share' ) ), _x( 'Settings', 'Plugin settings link on the plugins page', 'highlight-and-share' ) );
-		$appearance_link = sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'options-general.php?page=highlight-and-share&tab=appearance' ) ), _x( 'Configure Theme', 'Plugin settings link on the plugins page', 'highlight-and-share' ) );
-		$docs_link       = sprintf( '<a href="%s">%s</a>', esc_url( 'https://has.dlxplugins.com' ), _x( 'Documentation', 'Plugin settings link on the plugins page', 'highlight-and-share' ) );
-		$has_landing     = sprintf( '<a href="%s" style="color: #f60098;">%s</a>', esc_url( 'https://dlxplugins.com/plugins/highlight-and-share/' ), _x( 'Visit Site', 'Plugin settings link on the plugins page', 'highlight-and-share' ) );
+		$settings_link   = sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'options-general.php?page=highlight-and-share' ) ), _x( 'Settings', 'Plugin settings link on the plugins page', 'insta-admin-landing-page' ) );
+		$appearance_link = sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'options-general.php?page=highlight-and-share&tab=appearance' ) ), _x( 'Configure Theme', 'Plugin settings link on the plugins page', 'insta-admin-landing-page' ) );
+		$docs_link       = sprintf( '<a href="%s">%s</a>', esc_url( 'https://has.dlxplugins.com' ), _x( 'Documentation', 'Plugin settings link on the plugins page', 'insta-admin-landing-page' ) );
+		$has_landing     = sprintf( '<a href="%s" style="color: #f60098;">%s</a>', esc_url( 'https://dlxplugins.com/plugins/highlight-and-share/' ), _x( 'Visit Site', 'Plugin settings link on the plugins page', 'insta-admin-landing-page' ) );
 
 		array_unshift( $links, $has_landing );
 		array_unshift( $links, $docs_link );
@@ -114,11 +114,11 @@ class Admin {
 	}
 
 	/**
-	 * Save Highlight and Share settings options (for emails).
+	 * Save InstaAdmin Landing Page settings options (for emails).
 	 */
 	public function ajax_save_emails_tab() {
 		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'has_save_email_settings' ) || ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Security check failed', 'highlight-and-share' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'insta-admin-landing-page' ) ) );
 		}
 
 		// Existing settings.
@@ -144,7 +144,7 @@ class Admin {
 	 */
 	public function ajax_retrieve_emails_tab() {
 		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'has_retrieve_email_settings' ) || ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Security check failed', 'highlight-and-share' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'insta-admin-landing-page' ) ) );
 		}
 
 		// Get saved options.
@@ -175,7 +175,7 @@ class Admin {
 	 */
 	public function ajax_reset_emails_tab() {
 		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'has_reset_email_settings' ) || ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Security check failed', 'highlight-and-share' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'insta-admin-landing-page' ) ) );
 		}
 
 		// Get saved options. Then write over it with the defaults (wp_parse_args in reverse).
@@ -323,7 +323,7 @@ class Admin {
 	}
 
 	/**
-	 * Retrieve Highlight and Share settings options.
+	 * Retrieve InstaAdmin Landing Page settings options.
 	 */
 	public function ajax_retrieve_settings_tab() {
 		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'has_retrieve_settings' ) || ! current_user_can( 'manage_options' ) ) {
@@ -341,7 +341,7 @@ class Admin {
 	}
 
 	/**
-	 * Save Highlight and Share settings options.
+	 * Save InstaAdmin Landing Page settings options.
 	 */
 	public function ajax_save_settings_tab() {
 		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'has_save_settings' ) || ! current_user_can( 'manage_options' ) ) {
@@ -370,7 +370,7 @@ class Admin {
 		}
 
 		// Converted options are sanitized. Save the options.
-		update_option( 'highlight-and-share', $converted_options );
+		update_option( 'insta-admin-landing-page', $converted_options );
 		$this->clear_frontend_cache();
 		wp_send_json_success( $this->map_defaults_to_js( stripslashes_deep( $converted_options ) ) );
 	}
@@ -385,9 +385,9 @@ class Admin {
 
 		// Get saved options. Then write over it with the defaults (wp_parse_args in reverse).
 		$defaults = Options::get_defaults();
-		$options  = get_option( 'highlight-and-share', array() );
+		$options  = get_option( 'insta-admin-landing-page', array() );
 		$options  = wp_parse_args( $defaults, $options ); // wp_parse_args in reverse order as to not lose data.
-		update_option( 'highlight-and-share', $options );
+		update_option( 'insta-admin-landing-page', $options );
 		$this->clear_frontend_cache();
 
 		// Send the data home.
@@ -424,7 +424,7 @@ class Admin {
 	 * @see init
 	 */
 	public function add_admin_menu() {
-		add_options_page( _x( 'Highlight and Share', 'Plugin Name - Settings Page Title', 'highlight-and-share' ), _x( 'Highlight and Share', 'Plugin Name - Menu Item', 'highlight-and-share' ), 'manage_options', 'highlight-and-share', array( $this, 'options_page' ) );
+		add_options_page( _x( 'InstaAdmin Landing Page', 'Plugin Name - Settings Page Title', 'insta-admin-landing-page' ), _x( 'InstaAdmin Landing Page', 'Plugin Name - Menu Item', 'insta-admin-landing-page' ), 'manage_options', 'insta-admin-landing-page', array( $this, 'options_page' ) );
 	}
 
 	/**
@@ -455,8 +455,8 @@ class Admin {
 						width="450" height="113" src="<?php echo esc_url( Functions::get_plugin_url( '/img/plugin-logo-horizontal.png' ) ); ?>" alt="Higlight and Share" /></h2>
 					</div>
 					<div class="header__btn-wrap">
-						<a class=" has__btn-primary" href="https://has.dlxplugins.com"><i class="dashicons dashicons-media-document"></i> <?php esc_html_e( 'Documentation', 'highlight-and-share' ); ?></a>
-						<a class=" has__btn-primary" href="https://dlxplugins.com/support/"><i class="dashicons dashicons-groups"></i> <?php esc_html_e( 'Support', 'highlight-and-share' ); ?></a>
+						<a class=" has__btn-primary" href="https://has.dlxplugins.com"><i class="dashicons dashicons-media-document"></i> <?php esc_html_e( 'Documentation', 'insta-admin-landing-page' ); ?></a>
+						<a class=" has__btn-primary" href="https://dlxplugins.com/support/"><i class="dashicons dashicons-groups"></i> <?php esc_html_e( 'Support', 'insta-admin-landing-page' ); ?></a>
 					</div>
 				</div>
 			</header>
@@ -484,10 +484,10 @@ class Admin {
 			<div class="has-admin-container-body-wrapper">
 				<div class="has-admin-container-body">
 					<nav class="nav-tab-wrapper">
-						<a class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'settings' ) ); ?>"><?php esc_html_e( 'Settings', 'highlight-and-share' ); ?></a>
-						<a class="<?php echo esc_attr( implode( ' ', $appearance_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'appearance' ) ); ?>"><?php esc_html_e( 'Appearance', 'highlight-and-share' ); ?></a>
-						<a class="<?php echo esc_attr( implode( ' ', $block_editor_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'block-editor' ) ); ?>"><?php esc_html_e( 'Block Editor', 'highlight-and-share' ); ?></a>
-						<a class="<?php echo esc_attr( implode( ' ', $emails_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'emails' ) ); ?>"><?php esc_html_e( 'Emails', 'highlight-and-share' ); ?></a>
+						<a class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'settings' ) ); ?>"><?php esc_html_e( 'Settings', 'insta-admin-landing-page' ); ?></a>
+						<a class="<?php echo esc_attr( implode( ' ', $appearance_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'appearance' ) ); ?>"><?php esc_html_e( 'Appearance', 'insta-admin-landing-page' ); ?></a>
+						<a class="<?php echo esc_attr( implode( ' ', $block_editor_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'block-editor' ) ); ?>"><?php esc_html_e( 'Block Editor', 'insta-admin-landing-page' ); ?></a>
+						<a class="<?php echo esc_attr( implode( ' ', $emails_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'emails' ) ); ?>"><?php esc_html_e( 'Emails', 'insta-admin-landing-page' ); ?></a>
 					</nav>
 					<?php
 					if ( null === $current_tab || 'settings' === $current_tab ) {
@@ -525,8 +525,8 @@ class Admin {
 					<div class="has-admin-container-wrap">
 						<div class="footer-rate-icon" aria-hidden="true"><img 
 							width="100" height="90" src="<?php echo esc_url( Functions::get_plugin_url( '/img/heart.png' ) ); ?>" /></div>
-						<a class="has__btn-primary" href="https://wordpress.org/support/plugin/highlight-and-share/reviews/" target="_blank"><i ></i> <?php esc_html_e( 'Please Rate Highlight and Share', 'highlight-and-share' ); ?></a>
-						<div class="has-plea"><?php esc_html_e( 'It really helps.', 'highlight-and-share' ); ?></div>
+						<a class="has__btn-primary" href="https://wordpress.org/support/plugin/highlight-and-share/reviews/" target="_blank"><i ></i> <?php esc_html_e( 'Please Rate InstaAdmin Landing Page', 'insta-admin-landing-page' ); ?></a>
+						<div class="has-plea"><?php esc_html_e( 'It really helps.', 'insta-admin-landing-page' ); ?></div>
 					</div>
 				</footer>
 			</div>
@@ -545,14 +545,14 @@ class Admin {
 				'has-admin',
 				Functions::get_plugin_url( '/dist/has-admin.css' ),
 				array(),
-				HIGHLIGHT_AND_SHARE_VERSION,
+				INSTA_ADMIN_DLXVERSION,
 				'all'
 			);
 			wp_enqueue_style(
 				'has-admin-css',
 				Functions::get_plugin_url( '/dist/has-admin-style.css' ),
 				array(),
-				HIGHLIGHT_AND_SHARE_VERSION,
+				INSTA_ADMIN_DLXVERSION,
 				'all'
 			);
 
@@ -560,7 +560,7 @@ class Admin {
 				'has-admin-themes',
 				Functions::get_plugin_url( '/dist/has-themes.css' ),
 				array(),
-				HIGHLIGHT_AND_SHARE_VERSION,
+				INSTA_ADMIN_DLXVERSION,
 				'all'
 			);
 
@@ -568,7 +568,7 @@ class Admin {
 				'has-admin-js',
 				Functions::get_plugin_url( '/dist/has-admin.js' ),
 				array(),
-				HIGHLIGHT_AND_SHARE_VERSION,
+				INSTA_ADMIN_DLXVERSION,
 				true
 			);
 
@@ -583,7 +583,7 @@ class Admin {
 					'has-settings-admin-js',
 					Functions::get_plugin_url( '/dist/has-admin-settings.js' ),
 					array(),
-					HIGHLIGHT_AND_SHARE_VERSION,
+					INSTA_ADMIN_DLXVERSION,
 					true
 				);
 				wp_localize_script(
@@ -608,7 +608,7 @@ class Admin {
 					'has-appearance-admin-js',
 					Functions::get_plugin_url( '/dist/has-admin-appearance.js' ),
 					array(),
-					HIGHLIGHT_AND_SHARE_VERSION,
+					INSTA_ADMIN_DLXVERSION,
 					true
 				);
 				wp_localize_script(
@@ -637,7 +637,7 @@ class Admin {
 					'has-block-editor-admin-js',
 					Functions::get_plugin_url( '/dist/has-admin-block-editor.js' ),
 					array(),
-					HIGHLIGHT_AND_SHARE_VERSION,
+					INSTA_ADMIN_DLXVERSION,
 					true
 				);
 				wp_localize_script(
@@ -662,7 +662,7 @@ class Admin {
 					'has-emails-admin-js',
 					Functions::get_plugin_url( '/dist/has-admin-emails.js' ),
 					array(),
-					HIGHLIGHT_AND_SHARE_VERSION,
+					INSTA_ADMIN_DLXVERSION,
 					true
 				);
 				wp_localize_script(
@@ -745,7 +745,7 @@ class Admin {
 				continue;
 			}
 
-			add_filter( 'safe_style_css', array( '\DLXPlugins\HAS\Functions', 'safe_css' ) );
+			add_filter( 'safe_style_css', array( '\DLXPlugins\InstaAdmin\Functions', 'safe_css' ) );
 
 			$allowed_html = wp_kses_allowed_html( 'post' );
 
@@ -759,7 +759,7 @@ class Admin {
 				),
 				$allowed_html
 			);
-			remove_filter( 'safe_style_css', array( '\DLXPlugins\HAS\Functions', 'safe_css' ) );
+			remove_filter( 'safe_style_css', array( '\DLXPlugins\InstaAdmin\Functions', 'safe_css' ) );
 		}
 	}
 
@@ -782,6 +782,6 @@ class Admin {
 	 * Clear frontend cache when settings are saved or reset.
 	 */
 	private function clear_frontend_cache() {
-		wp_cache_delete( 'has_frontend_html', 'highlight-and-share' );
+		wp_cache_delete( 'has_frontend_html', 'insta-admin-landing-page' );
 	}
 }

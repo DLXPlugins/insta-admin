@@ -1,14 +1,14 @@
-# Highlight and Share
+# InstaAdmin Landing Page
 
 ![dlxplugins-1673217257478-1x](https://user-images.githubusercontent.com/636521/211222507-1b95d00e-e7bb-489c-9684-2ee01e61094f.jpeg)
 
-> Highlight and Share is a free WordPress plugin that displays social networks when a user selects text, clicks on inline highlighted text, or uses the robust Click to Share block.
+> InstaAdmin Landing Page is a free WordPress plugin that displays social networks when a user selects text, clicks on inline highlighted text, or uses the robust Click to Share block.
 
 <img src="https://img.shields.io/badge/node-18.12.1-green" /> <img src="https://img.shields.io/badge/NPM-8.19.2-blue" /> <img src="https://img.shields.io/badge/Webpack-5.74.0-orange" /> <img src="https://img.shields.io/badge/webpack--cli-4.10.0-orange" /> <img src="https://img.shields.io/badge/%40wordpress%2Fscripts-%5E23.3.0-green" />
 
 ## Quick Links
 
-For an in-depth overview of Highlight and Share, <a href="https://has.dlxplugins.com/">please check out the documentation</a>.
+For an in-depth overview of InstaAdmin Landing Page, <a href="https://has.dlxplugins.com/">please check out the documentation</a>.
 
 * <a href="https://github.com/DLXPlugins/highlight-and-share/issues/new">Create an Issue or Feature Request</a>.
 * <a href="https://dlxplugins.com/support/">Leave a Support Request</a>.
@@ -72,7 +72,7 @@ entry: {
 	'has-gfont-raleway': { import: './src/scss/fonts/raleway.scss' },
 	'has-gfont-roboto': { import: './src/scss/fonts/roboto.scss' },
 	'has-gfont-source-sans-pro': { import: './src/scss/fonts/source-sans-pro.scss' },
-	'highlight-and-share': [ './src/frontendjs/highlight-and-share.js' ],
+	'insta-admin-landing-page': [ './src/frontendjs/highlight-and-share.js' ],
 },
 ```
 

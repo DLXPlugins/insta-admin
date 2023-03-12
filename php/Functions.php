@@ -5,7 +5,7 @@
  * @package HAS
  */
 
-namespace DLXPlugins\HAS;
+namespace DLXPlugins\InstaAdmin;
 
 /**
  * Class Functions
@@ -75,10 +75,10 @@ class Functions {
 				case 'url':
 					return esc_url( $attributes[ $attribute ] );
 				case 'default':
-					return new \WP_Error( 'has_dlx_unknown_type', __( 'Unknown type.', 'highlight-and-share' ) );
+					return new \WP_Error( 'has_dlx_unknown_type', __( 'Unknown type.', 'insta-admin-landing-page' ) );
 			}
 		}
-		return new \WP_Error( 'has_dlx_attribute_not_found', __( 'Attribute not found.', 'highlight-and-share' ) );
+		return new \WP_Error( 'has_dlx_attribute_not_found', __( 'Attribute not found.', 'insta-admin-landing-page' ) );
 	}
 
 	/**
@@ -145,7 +145,7 @@ class Functions {
 		/**
 		 * Filter: has_content_url
 		 *
-		 * Modify the post or page URL that Highlight and Share uses for sharing.
+		 * Modify the post or page URL that InstaAdmin Landing Page uses for sharing.
 		 *
 		 * @param string Post or Page URL (may be shortened).
 		 * @param int    The post or page ID.
@@ -317,7 +317,7 @@ class Functions {
 	 * @return string plugin slug.
 	 */
 	public static function get_plugin_slug() {
-		return dirname( plugin_basename( HIGHLIGHT_AND_SHARE_FILE ) );
+		return dirname( plugin_basename( INSTA_ADMIN_DLXFILE ) );
 	}
 
 	/**
@@ -326,7 +326,7 @@ class Functions {
 	 * @return string base file for the plugin.
 	 */
 	public static function get_plugin_file() {
-		return plugin_basename( HIGHLIGHT_AND_SHARE_FILE );
+		return plugin_basename( INSTA_ADMIN_DLXFILE );
 	}
 
 	/**
@@ -335,7 +335,7 @@ class Functions {
 	 * @return float version for the plugin.
 	 */
 	public static function get_plugin_version() {
-		return HIGHLIGHT_AND_SHARE_VERSION;
+		return INSTA_ADMIN_DLXVERSION;
 	}
 
 	/**
@@ -387,7 +387,7 @@ class Functions {
 		 *
 		 * @param string Plugin name.
 		 */
-		return apply_filters( 'has_dlx_plugin_name', __( 'Highlight and Share', 'highlight-and-share' ) );
+		return apply_filters( 'has_dlx_plugin_name', __( 'InstaAdmin Landing Page', 'insta-admin-landing-page' ) );
 	}
 
 	/**
@@ -405,7 +405,7 @@ class Functions {
 		 *
 		 * @param string Plugin description.
 		 */
-		return apply_filters( 'has_dlx_plugin_description', __( 'An alert and notification block inspired by Bootstrap, Material UI, and Chakra UI.', 'highlight-and-share' ) );
+		return apply_filters( 'has_dlx_plugin_description', __( 'An alert and notification block inspired by Bootstrap, Material UI, and Chakra UI.', 'insta-admin-landing-page' ) );
 	}
 
 	/**
@@ -657,7 +657,7 @@ class Functions {
 	 * @return string The new path.
 	 */
 	public static function get_plugin_dir( $path = '' ) {
-		$dir = rtrim( plugin_dir_path( HIGHLIGHT_AND_SHARE_FILE ), '/' );
+		$dir = rtrim( plugin_dir_path( INSTA_ADMIN_DLXFILE ), '/' );
 		if ( ! empty( $path ) && is_string( $path ) ) {
 			$dir .= '/' . ltrim( $path, '/' );
 		}
@@ -672,7 +672,7 @@ class Functions {
 	 * @return string URL to to the file.
 	 */
 	public static function get_plugin_url( $path = '' ) {
-		$dir = rtrim( plugin_dir_url( HIGHLIGHT_AND_SHARE_FILE ), '/' );
+		$dir = rtrim( plugin_dir_url( INSTA_ADMIN_DLXFILE ), '/' );
 		if ( ! empty( $path ) && is_string( $path ) ) {
 			$dir .= '/' . ltrim( $path, '/' );
 		}

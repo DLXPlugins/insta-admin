@@ -9,7 +9,7 @@ assignees: ''
 
 ## Feature Request
 
-What would you like to add or change in regards to Highlight and Share?
+What would you like to add or change in regards to InstaAdmin Landing Page?
 
 ## Describe any solutions you've considered
 

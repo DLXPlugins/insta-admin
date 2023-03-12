@@ -1,8 +1,8 @@
 # Copyright (C) 2019 Ronald Huereca
-# This file is distributed under the same license as the Highlight and Share plugin.
+# This file is distributed under the same license as the InstaAdmin Landing Page plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Highlight and Share 3.1.5\n"
+"Project-Id-Version: InstaAdmin Landing Page 3.1.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/highlight-and-share\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: highlight-and-share.php:138
-msgid "Highlight and Share"
+msgid "InstaAdmin Landing Page"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -303,12 +303,12 @@ msgstr ""
 #: highlight-and-share.php:1315
 #: highlight-and-share.php:1331
 msgctxt "Plugin Name - Settings Page Title"
-msgid "Highlight and Share"
+msgid "InstaAdmin Landing Page"
 msgstr ""
 
 #: highlight-and-share.php:1315
 msgctxt "Plugin Name - Menu Item"
-msgid "Highlight and Share"
+msgid "InstaAdmin Landing Page"
 msgstr ""
 
 #: highlight-and-share.php:1359
@@ -640,7 +640,7 @@ msgid "right"
 msgstr ""
 
 #: dist/blocks.build.js:1
-msgid "Highlight and Share Settings"
+msgid "InstaAdmin Landing Page Settings"
 msgstr ""
 
 #: dist/blocks.build.js:1

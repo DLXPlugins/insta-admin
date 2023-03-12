@@ -5,7 +5,7 @@
  * @package HAS
  */
 
-namespace DLXPlugins\HAS;
+namespace DLXPlugins\InstaAdmin;
 
 /**
  * Helper class for registering blocks.
@@ -61,7 +61,7 @@ class Blocks {
 				'has-style-frontend-css',
 				Functions::get_plugin_url( 'dist/has-cts-style.css' ),
 				array(),
-				HIGHLIGHT_AND_SHARE_VERSION,
+				INSTA_ADMIN_DLXVERSION,
 				'all'
 			);
 		}
@@ -75,7 +75,7 @@ class Blocks {
 			'has-inline-highlighting-js',
 			Functions::get_plugin_url( 'build/has-inline-highlighting.js' ),
 			array(),
-			HIGHLIGHT_AND_SHARE_VERSION,
+			INSTA_ADMIN_DLXVERSION,
 			true
 		);
 	}
@@ -88,7 +88,7 @@ class Blocks {
 			'has-style-admin-css',
 			Functions::get_plugin_url( 'dist/has-cts-editor.css' ),
 			array(),
-			HIGHLIGHT_AND_SHARE_VERSION,
+			INSTA_ADMIN_DLXVERSION,
 			'all'
 		);
 		wp_add_inline_style(
@@ -99,7 +99,7 @@ class Blocks {
 			'has-click-to-share',
 			Functions::get_plugin_url( 'build/has-click-to-share.js' ),
 			array( 'wp-blocks', 'wp-element', 'wp-i18n' ),
-			HIGHLIGHT_AND_SHARE_VERSION,
+			INSTA_ADMIN_DLXVERSION,
 			true
 		);
 		$color_palette = array();
@@ -123,7 +123,7 @@ class Blocks {
 				'cssFolder'      => esc_url( functions::get_plugin_url( '/dist/' ) ),
 			)
 		);
-		wp_set_script_translations( 'has-click-to-share', 'highlight-and-share' );
+		wp_set_script_translations( 'has-click-to-share', 'insta-admin-landing-page' );
 		do_action( 'has_enqueue_block_styles_scripts' );
 	}
 
@@ -164,7 +164,7 @@ class Blocks {
 						'has-adobe-fonts',
 						$adobe_fonts_url,
 						array(),
-						HIGHLIGHT_AND_SHARE_VERSION,
+						INSTA_ADMIN_DLXVERSION,
 						'all'
 					);
 					continue;
@@ -176,7 +176,7 @@ class Blocks {
 					'has-google-font-' . $font_slug,
 					esc_url( Functions::get_plugin_url( 'dist/has-gfont-' . $font_slug . '.css' ) ),
 					array(),
-					HIGHLIGHT_AND_SHARE_VERSION,
+					INSTA_ADMIN_DLXVERSION,
 					'all'
 				);
 				continue;

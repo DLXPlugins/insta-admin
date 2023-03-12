@@ -1,6 +1,6 @@
 {
-    "name": "dlxplugins/highlight-and-share",
-    "description": "An easy-to-use content highlighter.",
+    "name": "dlxplugins/instaadmin",
+    "description": "Build an admin landing page using blocks.",
     "type": "project",
     "license": "GPL",
     "authors": [
@@ -15,7 +15,7 @@
     },
       "autoload": {
         "psr-4": {
-            "DLXPlugins\\HAS\\": "php/"
+            "DLXPlugins\\InstaAdmin\\": "php/"
         }
     }
 }

@@ -1,4 +1,4 @@
-=== Highlight and Share - Inline Highlighting and Click to Share ===
+=== InstaAdmin Landing Page - Inline Highlighting and Click to Share ===
 Contributors: ronalfy
 Tags: highlight, social sharing, click to tweet, sharing, highlight text
 Requires at least: 5.1
@@ -14,9 +14,9 @@ Easily Show Social Networks When Users Interact With Your Site's Text
 
 Meet your readers at your content.
 
-Show social network options when users interact with your text (<a href="https://docs.dlxplugins.com/v/highlight-and-share/getting-started/how-highlight-and-share-works">find out how Highlight and Share works</a>).
+Show social network options when users interact with your text (<a href="https://docs.dlxplugins.com/v/highlight-and-share/getting-started/how-highlight-and-share-works">find out how InstaAdmin Landing Page works</a>).
 
-Highlight and Share has the following major features:
+InstaAdmin Landing Page has the following major features:
 
 1. Show social networks when users select text.
 2. Add <a href="https://docs.dlxplugins.com/v/highlight-and-share/inline-highlighting/what-is-inline-highlighting">inline highlighting</a> to split out longform text.
@@ -47,20 +47,20 @@ Advanced customization is allowed via hooks.  See the plugin's <a href="https://
 
 == Installation ==
 
-1. Search Highlight and Share in the plugin's screen.
+1. Search InstaAdmin Landing Page in the plugin's screen.
 2. Install and activate.
 
 > <a href="https://has.dlxplugins.com/">In-depth Documentation</a> - Please check out our thorough documentation ❤️️
 
 == Frequently Asked Questions ==
 
-= How does Highlight and Share work? =
+= How does InstaAdmin Landing Page work? =
 
-Highlight and Share shows social networks <a href="https://docs.dlxplugins.com/v/highlight-and-share/getting-started/how-highlight-and-share-works">as users interact with your site's text</a>. This can be via text selection, <a href="https://docs.dlxplugins.com/v/highlight-and-share/inline-highlighting/what-is-inline-highlighting">inline highlighting</a>, or using the <a href="https://docs.dlxplugins.com/v/highlight-and-share/click-to-share-block/the-click-to-share-block">Click to Share block</a>.
+InstaAdmin Landing Page shows social networks <a href="https://docs.dlxplugins.com/v/highlight-and-share/getting-started/how-highlight-and-share-works">as users interact with your site's text</a>. This can be via text selection, <a href="https://docs.dlxplugins.com/v/highlight-and-share/inline-highlighting/what-is-inline-highlighting">inline highlighting</a>, or using the <a href="https://docs.dlxplugins.com/v/highlight-and-share/click-to-share-block/the-click-to-share-block">Click to Share block</a>.
 
 = What social networks does this plugin work with? =
 
-Highlight and Share <a href="https://docs.dlxplugins.com/v/highlight-and-share/developers/available-social-networks">works with the following networks</a>:
+InstaAdmin Landing Page <a href="https://docs.dlxplugins.com/v/highlight-and-share/developers/available-social-networks">works with the following networks</a>:
 
 * Twitter (allows text sharing)
 * Facebook
@@ -72,7 +72,7 @@ Highlight and Share <a href="https://docs.dlxplugins.com/v/highlight-and-share/d
 * Copy (allows text sharing)
 * Email (allows text sharing)
 
-= How can I customize the look of Highlight and Share? =
+= How can I customize the look of InstaAdmin Landing Page? =
 
 Several ways. There are several built-in themes, and you have the oppotunity to <a href="https://docs.dlxplugins.com/v/highlight-and-share/getting-started/changing-themes-and-appearance/configuring-a-custom-theme">completely customize a custom theme</a>.
 
@@ -86,7 +86,7 @@ You can turn off the theme and include CSS in your own theme.
 
 = Does this plugin work on mobile devices? =
 
-Most mobile devices already have sharing features on text selection, but Highlight and Share works especially well for <a href="https://docs.dlxplugins.com/v/highlight-and-share/inline-highlighting/what-is-inline-highlighting">inline highlighting</a> and the <a href="https://docs.dlxplugins.com/v/highlight-and-share/click-to-share-block/the-click-to-share-block">Click to Share block</a>.
+Most mobile devices already have sharing features on text selection, but InstaAdmin Landing Page works especially well for <a href="https://docs.dlxplugins.com/v/highlight-and-share/inline-highlighting/what-is-inline-highlighting">inline highlighting</a> and the <a href="https://docs.dlxplugins.com/v/highlight-and-share/click-to-share-block/the-click-to-share-block">Click to Share block</a>.
 
 = What Browsers Have You Tested This In? =
 
@@ -124,7 +124,7 @@ So far, the latest versions of Chrome, Firefox, Safari, Edge, and IE9+.
 
 = 4.0.3 =
 * Released 2022-12-12 (Plot Bunny)
-* Fixing JS bug when custom selectors are used to show Highlight and Share.
+* Fixing JS bug when custom selectors are used to show InstaAdmin Landing Page.
 * Props <a href="https://jahangiri.us/">Holly</a> for spotting the bug and naming this release.
 
 = 4.0.2 =
@@ -137,7 +137,7 @@ So far, the latest versions of Chrome, Firefox, Safari, Edge, and IE9+.
 * The plugin has been completely re-written, but should for the most part be backwards compatible.
 * Re-designed admin panel, with a better and usable appearance splitting out most applicable sections.
 * Feature: reorder the social networks.
-* Feature: customize the look of Highlight and Share on the frontend.
+* Feature: customize the look of InstaAdmin Landing Page on the frontend.
 * Feature: edit individual icon colors.
 * Feature: new vertical orientation.
 * Feature: customize the look of inline highlighting on the frontend.
@@ -146,7 +146,7 @@ So far, the latest versions of Chrome, Firefox, Safari, Edge, and IE9+.
 * Feature: tooltips. Show a contextual tooltip when hovering over a social network.
 * Feature: modify the labels and tooltips per social network.
 * Feature: new advanced selectors for those with pagebuilders.
-* Bug fix: fixing Highlight and Share social network positioning so it always loads in a predictable location (up top)
+* Bug fix: fixing InstaAdmin Landing Page social network positioning so it always loads in a predictable location (up top)
 * Feature: local storage of Google Fonts and an Adobe Fonts option for customizable typography in the Click to Share block.
 * Feature: Completely rewritten JavaScript. No longer relies on jQuery.
 
@@ -331,7 +331,7 @@ So far, the latest versions of Chrome, Firefox, Safari, Edge, and IE9+.
 = 2.4.0 =
 * Released 2018-09-02
 * New theme: Brand Colors (icons only).
-* Enhancement: You can now customize Highlight and Share through the customizer.
+* Enhancement: You can now customize InstaAdmin Landing Page through the customizer.
 
 = 2.3.6 =
 * Released 2018-08-28

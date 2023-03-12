@@ -3,7 +3,7 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Highlight and Share v1.0.0\n"
+"Project-Id-Version: InstaAdmin Landing Page v1.0.0\n"
 "Report-Msgid-Bugs-To: Ronald Huereca <ronalfy@gmail.com>\n"
 "POT-Creation-Date: 2015-11-07 13:07-0600\n"
 "PO-Revision-Date: \n"
@@ -41,13 +41,13 @@ msgstr "Udostępnij"
 
 #: highlight-and-share.php:334 highlight-and-share.php:351
 msgctxt "Plugin Name - Settings Page Title"
-msgid "Highlight and Share"
-msgstr "Highlight and Share"
+msgid "InstaAdmin Landing Page"
+msgstr "InstaAdmin Landing Page"
 
 #: highlight-and-share.php:334
 msgctxt "Plugin Name - Menu Item"
-msgid "Highlight and Share"
-msgstr "Highlight and Share"
+msgid "InstaAdmin Landing Page"
+msgstr "InstaAdmin Landing Page"
 
 #: highlight-and-share.php:375
 msgctxt "plugin settings heading"
