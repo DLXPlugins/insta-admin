@@ -83,9 +83,14 @@ class Functions {
 
 	/**
 	 * Get a landing page menu slug.
+	 *
+	 * @param string $context The context to append to the slug.
 	 */
-	public static function get_landing_page_slug() {
+	public static function get_landing_page_slug( $context = '' ) {
 		$landing_page_slug = 'insta-admin';
+		if ( $context ) {
+			$landing_page_slug .= '_' . $context;
+		}
 		/**
 		 * Filter the slug for the admin landing page.
 		 *

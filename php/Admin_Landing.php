@@ -38,6 +38,12 @@ class Admin_Landing {
 		// Add the admin page.
 		add_action( 'admin_menu', array( $this, 'add_admin_landing_page_menu' ) );
 
+		// Redirect to correct settings page.
+		add_action( 'current_screen', array( $this, 'maybe_redirect_to_settings_page' ), 9 );
+
+		// Add the admin page for full-screen.
+		add_action( 'current_screen', array( $this, 'maybe_output_dashboard_landing_page' ), 10 );
+
 		// Add landing page admin enqueue scripts.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
@@ -64,12 +70,22 @@ class Admin_Landing {
 		);
 		$wp_admin_bar->add_node( $args );
 
+		// Get admin panel URL.
+		$admin_url = add_query_arg(
+			array(
+				'action'   => 'ialp_landing_redirect',
+				'redirect' => true,
+				'nonce'    => wp_create_nonce( 'ialp_admin_landing_redirect_nonce' ),
+			),
+			admin_url( 'index.php' )
+		);
+
 		// Add the settings menu item.
 		$args = array(
 			'parent' => 'insta_admin_landing_page',
 			'id'     => 'insta_admin_landing_page_settings',
 			'title'  => __( 'InstaAdmin Settings', 'insta-admin-landing-page' ),
-			'href'   => esc_url( admin_url( 'options-general.php?page=' . Functions::get_landing_page_slug() ) ),
+			'href'   => esc_url( admin_url( 'options-general.php?page=insta-admin-settings' ) ),
 		);
 		$wp_admin_bar->add_node( $args );
 
@@ -85,7 +101,7 @@ class Admin_Landing {
 			'parent' => 'insta_admin_landing_page',
 			'id'     => 'insta_admin_landing_page_view_admin_page',
 			'title'  => __( 'View Landing Page', 'insta-admin-landing-page' ),
-			'href'   => esc_url( admin_url( 'options-general.php?page=' . Functions::get_landing_page_slug() ) ),
+			'href'   => esc_url( $admin_url ),
 		);
 		$wp_admin_bar->add_node( $args );
 	}
@@ -100,7 +116,7 @@ class Admin_Landing {
 	public function add_admin_body_class( $classes ) {
 		$current_page = filter_input( INPUT_GET, 'page', FILTER_DEFAULT );
 		if ( Functions::get_landing_page_slug() === $current_page ) {
-			$classes .= ' is-insta-admin-landing-page';
+			$classes .= ' ialp-admin-landing-page';
 		}
 		return $classes;
 	}
@@ -110,13 +126,30 @@ class Admin_Landing {
 	 */
 	public function add_admin_landing_page_menu() {
 
-		add_options_page(
-			Functions::get_landing_page_title(),
-			Functions::get_landing_page_menu_title(),
-			'manage_options',
-			Functions::get_landing_page_slug(),
-			array( $this, 'admin_landing_page_menu_callback' )
-		);
+		// Get landing page ID.
+		$landing_page_id = self::get_landing_page_id();
+
+		// Get fullscreen|regular post meta.
+		$fullscreen = (bool) get_post_meta( $landing_page_id, '_ialp_full_screen', true );
+
+		// If full screen, add dashboard page.
+		if ( $fullscreen ) {
+			add_dashboard_page(
+				'',
+				'',
+				'manage_options',
+				Functions::get_landing_page_slug(),
+				''
+			);
+		} else {
+			add_options_page(
+				Functions::get_landing_page_title(),
+				Functions::get_landing_page_menu_title(),
+				'manage_options',
+				Functions::get_landing_page_slug(),
+				array( $this, 'admin_landing_page_menu_callback' )
+			);
+		}
 	}
 
 	/**
@@ -158,41 +191,14 @@ class Admin_Landing {
 			return;
 		}
 
-		self::$landing_page_id = $this->get_landing_page_id();
+		self::$landing_page_id = self::get_landing_page_id();
 	}
 
 	/**
 	 * Callback for the admin landing page menu.
 	 */
 	public function admin_landing_page_menu_callback() {
-		// Get the landing page.
-		$landing_page_id = $this->get_landing_page_id();
-
-		// Get the landing page and the page content.
-		$landing_page = get_post( $landing_page_id );
-
-		// Check landing page.
-		if ( ! $landing_page ) {
-			// Landing page not found.
-			echo '<div class="wrap">';
-			echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
-			echo '<p>' . esc_html__( 'The landing page for the admin area has not been created yet.', 'insta-admin-landing-page' ) . '</p>';
-			echo '</div>';
-			return;
-		}
-
-		// Output the landing page.
-		$landing_page_content = apply_filters( 'the_content', $landing_page->post_content );
-		?>
-		<div id="insta-admin-landing-page" class="insta-admin-landing-page-wrap">
-			<div class="insta-admin-landing-page-content">
-				<?php
-				// todo - needs kses update.
-				echo wp_kses_post( $landing_page_content );
-				?>
-			</div>
-		</div>
-		<?php
+		self::get_landing_page_body();
 	}
 
 	/**
@@ -230,8 +236,17 @@ class Admin_Landing {
 	 * @param string $hook Page hook in the admin.
 	 */
 	public function enqueue_admin_scripts( $hook ) {
+		$is_settings_page           = 'settings_page_' . Functions::get_landing_page_slug() === $hook;
+		$is_settings_dashboard_page = false;
+		if ( empty( $hook ) ) {
+			// Get current page.
+			$current_page = filter_input( INPUT_GET, 'page', FILTER_DEFAULT );
+			if ( Functions::get_landing_page_slug() === $current_page ) {
+				$is_settings_dashboard_page = true;
+			}
+		}
 		// Only enqueue on the landing page.
-		if ( 'settings_page_' . Functions::get_landing_page_slug() !== $hook ) {
+		if ( ! $is_settings_page && ! $is_settings_dashboard_page ) {
 			return;
 		}
 
@@ -260,7 +275,7 @@ class Admin_Landing {
 		 *
 		 * @param string $hook Page hook in the admin.
 		 */
-		do_action( 'insta_admin_landing_page_enqueue_scripts', $hook );
+		do_action( 'ialp_enqueue_scripts', $hook );
 	}
 
 	/**
@@ -288,7 +303,7 @@ class Admin_Landing {
 	 *
 	 * @return int
 	 */
-	public function get_landing_page_id() {
+	public static function get_landing_page_id() {
 		if ( ! is_null( self::$landing_page_id ) ) {
 			return self::$landing_page_id;
 		}
@@ -336,6 +351,141 @@ class Admin_Landing {
 		return self::$landing_page_id;
 	}
 
+	/**
+	 * Retrieve the landing page admin URL.
+	 */
+	public static function get_landing_page_admin_url() {
+		// Get landing page ID.
+		$landing_page_id = self::get_landing_page_id();
+
+		// Get fullscreen|regular post meta.
+		$fullscreen = (bool) get_post_meta( $landing_page_id, '_ialp_full_screen', true );
+
+		// If full screen, get dashboard URL.
+		if ( $fullscreen ) {
+			$admin_url = admin_url( 'index.php?page=' . Functions::get_landing_page_slug() );
+		} else {
+			// Not full screen, get regular admin URL.
+			$admin_url = admin_url( 'options-general.php?page=' . Functions::get_landing_page_slug() );
+		}
+		return $admin_url;
+	}
+
+	/**
+	 * Output the landing page body. Works for both fullscreen and regular view.
+	 */
+	public static function get_landing_page_body() {
+		// Get the landing page.
+		$landing_page_id = self::get_landing_page_id();
+
+		// Get the landing page and the page content.
+		$landing_page = get_post( $landing_page_id );
+
+		// Check landing page.
+		if ( ! $landing_page ) {
+			// Landing page not found.
+			echo '<div class="wrap">';
+			echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
+			echo '<p>' . esc_html__( 'The landing page for the admin area has not been created yet.', 'insta-admin-landing-page' ) . '</p>';
+			echo '</div>';
+			return;
+		}
+
+		// Output the landing page.
+		$landing_page_content = apply_filters( 'the_content', $landing_page->post_content );
+		?>
+		<div id="insta-admin-landing-page" class="insta-admin-landing-page-wrap">
+			<div class="insta-admin-landing-page-content">
+				<?php
+				// todo - needs kses update.
+				echo wp_kses_post( $landing_page_content );
+				?>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Retrieve the fullscreen landing page footer HTML.
+	 */
+	public static function get_landing_page_footer() {
+		do_action( 'admin_footer' );
+		do_action( 'admin_print_footer_scripts' );
+		?>
+		</body>
+		</html>
+		<?php
+	}
+
+	/**
+	 * Retrieve the fullscreen landing page header HTML.
+	 *
+	 * Credit: SliceWP Setup Wizard.
+	 */
+	public static function get_landing_page_header() {
+		// Get the current screen for script loading.
+		$current_screen = get_current_screen();
+
+		// Get locale.
+		global $wp_locale;
+		?>
+		<!DOCTYPE html>
+		<html <?php language_attributes(); ?>>
+		<?php
+		// Get the admin landing page title.
+		$landing_page_title = get_the_title( self::get_landing_page_id() );
+
+		/**
+		 * Filter the admin landing page title.
+		 *
+		 * @param string $landing_page_title The admin landing page title.
+		 */
+		$landing_page_title = apply_filters( 'ialp_landing_page_title', $landing_page_title );
+		?>
+		<head>
+			<meta name="viewport" content="width=device-width" />
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<title><?php echo esc_html( $landing_page_title ); ?></title>
+			<?php
+			/**
+			 * Admin script vars. From wp-admin/admin-header.php.
+			 */
+			?>
+			<script type="text/javascript">
+			addLoadEvent = function(func){if(typeof jQuery!=='undefined')jQuery(function(){func();});else if(typeof wpOnload!=='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};
+			var ajaxurl = '<?php echo esc_js( admin_url( 'admin-ajax.php', 'relative' ) ); ?>',
+				pagenow = '<?php echo esc_js( $current_screen->id ); ?>',
+				typenow = '<?php echo esc_js( $current_screen->post_type ); ?>',
+				adminpage = '<?php echo esc_js( 'ialp-admin' ); ?>',
+				thousandsSeparator = '<?php echo esc_js( $wp_locale->number_format['thousands_sep'] ); ?>',
+				decimalPoint = '<?php echo esc_js( $wp_locale->number_format['decimal_point'] ); ?>',
+				isRtl = <?php echo (int) is_rtl(); ?>;
+			</script>
+			<?php wp_enqueue_style( 'colors' ); ?>
+			<?php do_action( 'admin_enqueue_scripts' ); ?>
+			<?php do_action( 'admin_print_styles' ); ?>
+			<?php do_action( 'admin_head' ); ?>
+			<?php do_action( 'admin_print_scripts' ); ?>
+		</head>
+		<?php
+		/**
+		 * Filter the admin body classes.
+		 *
+		 * @param array The admin body classes.
+		 */
+		$admin_body_classes = apply_filters(
+			'ialp_admin_body_class',
+			array(
+				'ialp-admin',
+				'ialp-admin-landing-page',
+				'ialp-admin-landing-is-fullscreen',
+			)
+		);
+		?>
+		<body class="<?php echo esc_attr( implode( ' ', $admin_body_classes ) ); ?>">
+		<?php
+	}
+
 
 	/**
 	 * Set the stylesheet directory to our theme.json file path.
@@ -348,24 +498,86 @@ class Admin_Landing {
 		global $current_screen;
 		if ( null !== $current_screen ) {
 
-			if ( 'insta_admin_landing' === $current_screen->post_type || 'settings_page_insta-admin' === $current_screen->id ) {
+			if ( 'insta_admin_landing' === $current_screen->post_type || 'settings_page_insta-admin' === $current_screen->id || Functions::get_landing_page_slug() === $current_screen->id ) {
 				$stylesheet_dir = Functions::get_plugin_dir( '/assets/json/' );
 			}
 		}
 		return $stylesheet_dir;
 	}
 
+	/**
+	 * Redirect to the correct page if the admin settings URL is invalid.
+	 */
+	public function maybe_redirect_to_settings_page() {
+		// Get the current action, if any.
+		$action = filter_input( INPUT_GET, 'action', FILTER_DEFAULT );
+		if ( 'ialp_landing_redirect' !== $action ) {
+			return;
+		}
 
+		// Get redirect flag.
+		$redirect = filter_input( INPUT_GET, 'redirect', FILTER_VALIDATE_BOOLEAN );
 
+		// Action matches, let's check nonce and permissions.
+		$nonce = filter_input( INPUT_GET, 'nonce', FILTER_DEFAULT );
+		if ( ! wp_verify_nonce( $nonce, 'ialp_admin_landing_redirect_nonce' ) || ! current_user_can( 'manage_options' ) || ! $redirect ) {
+			return;
+		}
 
+		// All is well, redirect to admin landing page.
+		wp_safe_redirect(
+			esc_url(
+				self::get_landing_page_admin_url()
+			)
+		);
+		exit;
+	}
 
+	/**
+	 * Output a dashboard full-screen admin if landing page is fullscreen.
+	 */
+	public function maybe_output_dashboard_landing_page() {
+		// Exit if not in admin.
+		if ( ! is_admin() ) {
+			return;
+		}
 
+		// Get landing page slug.
+		$landing_page_slug = Functions::get_landing_page_slug();
 
+		// Get current screen base.
+		$current_screen      = get_current_screen();
+		$current_screen_base = $current_screen->base;
 
+		// Get admin page.
+		$admin_page = filter_input( INPUT_GET, 'page', FILTER_DEFAULT );
+		if ( $landing_page_slug !== $admin_page || $current_screen_base !== $landing_page_slug || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 
+		// Get landing page ID.
+		$landing_page_id = self::get_landing_page_id();
 
+		// Get fullscreen|regular post meta.
+		$fullscreen = (bool) get_post_meta( $landing_page_id, '_ialp_full_screen', true );
 
+		// If not fullscreen, exit.
+		if ( ! $fullscreen ) {
+			return;
+		}
 
+		// Get landing page dashboard header.
+		self::get_landing_page_header();
+
+		// Get landing page body.
+		self::get_landing_page_body();
+
+		// Get landing page dashboard footer.
+		self::get_landing_page_footer();
+
+		// Exit silently.
+		exit;
+	}
 
 	/**
 	 * Redirect user from post type edit screen to landing page edit screen.
@@ -385,7 +597,7 @@ class Admin_Landing {
 			}
 
 			// Redirect to the landing page edit screen.
-			$landing_page_id = $this->get_landing_page_id();
+			$landing_page_id = self::get_landing_page_id();
 			if ( $landing_page_id ) {
 				$can_redirect = wp_safe_redirect(
 					esc_url_raw( admin_url( 'post.php?post=' . $landing_page_id . '&action=edit' ) ),
@@ -425,18 +637,18 @@ class Admin_Landing {
 		 * Meta for enabling full screen view..
 		 */
 		// register_post_meta(
-		// 	'page',
-		// 	'_bl_nav_type', /* can be: main, alt */
-		// 	array(
-		// 		'sanitize_callback' => 'sanitize_text_field',
-		// 		'show_in_rest'      => true,
-		// 		'type'              => 'string',
-		// 		'auth_callback'     => function () {
-		// 			return current_user_can( 'edit_posts' );
-		// 		},
-		// 		'single'            => true,
-		// 		'default'           => 'main',
-		// 	)
+		// 'page',
+		// '_bl_nav_type', /* can be: main, alt */
+		// array(
+		// 'sanitize_callback' => 'sanitize_text_field',
+		// 'show_in_rest'      => true,
+		// 'type'              => 'string',
+		// 'auth_callback'     => function () {
+		// return current_user_can( 'edit_posts' );
+		// },
+		// 'single'            => true,
+		// 'default'           => 'main',
+		// )
 		// );
 	}
 }
