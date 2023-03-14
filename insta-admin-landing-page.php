@@ -73,6 +73,12 @@ class Insta_Admin_DLX {
 		$admin = new Admin();
 		$admin->run();
 
+		// Check to see if GenerateBlocks is enabled and include compatibility.
+		if ( Functions::is_activated( 'generateblocks/plugin.php' ) ) {
+			$generate_blocks = new Compatibility\Generate_Blocks();
+			$generate_blocks->run();
+		}
+
 	}
 }
 

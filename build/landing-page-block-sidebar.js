@@ -20,10 +20,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/escape-html */ "@wordpress/escape-html");
-/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
@@ -39,7 +37,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var Sidebar = function Sidebar(props) {
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
@@ -49,6 +46,10 @@ var Sidebar = function Sidebar(props) {
     _useState4 = _slicedToArray(_useState3, 2),
     adminSlug = _useState4[0],
     setAdminSlug = _useState4[1];
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Site Features', 'insta-admin-landing-page')),
+    _useState6 = _slicedToArray(_useState5, 2),
+    adminMenuTitle = _useState6[0],
+    setAdminMenuTitle = _useState6[1];
 
   /* Subscribe to post updates and update the slug */
   (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.subscribe)(function () {
@@ -64,7 +65,7 @@ var Sidebar = function Sidebar(props) {
 
       // Find and sanitize slug.
       if (meta._ialp_slug !== null && typeof meta._ialp_slug !== 'undefined') {
-        setAdminSlug((0,_wordpress_url__WEBPACK_IMPORTED_MODULE_5__.cleanForSlug)(meta._ialp_slug));
+        setAdminSlug((0,_wordpress_url__WEBPACK_IMPORTED_MODULE_4__.cleanForSlug)(meta._ialp_slug));
       }
     }
   });
@@ -92,6 +93,14 @@ var Sidebar = function Sidebar(props) {
     } else {
       setAdminSlug(meta._ialp_slug);
     }
+
+    // Set admin title.
+    if (meta._ialp_menu_title === null || typeof meta._ialp_menu_title === 'undefined') {
+      props.setMetaFieldValue('_ialp_menu_title', (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Site Features', 'insta-admin-landing-page'));
+      setAdminMenuTitle((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Site Features', 'insta-admin-landing-page'));
+    } else {
+      setAdminMenuTitle(meta._ialp_menu_title);
+    }
   }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     initialOpen: true,
@@ -112,9 +121,17 @@ var Sidebar = function Sidebar(props) {
     value: adminSlug,
     onChange: function onChange(value) {
       setAdminSlug(value);
-      props.setMetaFieldValue('_ialp_slug', (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_5__.cleanForSlug)(value));
+      props.setMetaFieldValue('_ialp_slug', (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_4__.cleanForSlug)(value));
     },
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Set the slug for the landing page.', 'insta-admin-landing-page')
+  })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Menu Title', 'insta-admin-landing-page'),
+    value: adminMenuTitle,
+    onChange: function onChange(value) {
+      setAdminMenuTitle(value);
+      props.setMetaFieldValue('_ialp_menu_title', value);
+    },
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Set the menu title used in the admin sidebar.', 'insta-admin-landing-page')
   }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.withDispatch)(function (dispatch) {
@@ -166,16 +183,6 @@ module.exports = window["wp"]["editPost"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["element"];
-
-/***/ }),
-
-/***/ "@wordpress/escape-html":
-/*!************************************!*\
-  !*** external ["wp","escapeHtml"] ***!
-  \************************************/
-/***/ ((module) => {
-
-module.exports = window["wp"]["escapeHtml"];
 
 /***/ }),
 

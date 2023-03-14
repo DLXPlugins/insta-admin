@@ -391,6 +391,11 @@ class Admin_Landing {
 			return;
 		}
 
+		/**
+		 * Fires before the landing page HTML is output. Useful for enqueuing scripts/styles for both fullscreen and regular view.
+		 */
+		do_action( 'ialp_pre_landing_page_html' );
+
 		// Output the landing page.
 		$landing_page_content = apply_filters( 'the_content', $landing_page->post_content );
 		?>
@@ -650,6 +655,24 @@ class Admin_Landing {
 				},
 				'single'            => true,
 				'default'           => 'insta-admin',
+			)
+		);
+
+		/**
+		 * Meta for setting the menu title.
+		 */
+		register_post_meta(
+			'insta_admin_landing',
+			'_ialp_menu_title',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => true,
+				'type'              => 'string',
+				'auth_callback'     => function () {
+					return current_user_can( 'manage_options' );
+				},
+				'single'            => true,
+				'default'           => __( 'Site Features', 'insta-admin-landing-page' ),
 			)
 		);
 	}

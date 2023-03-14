@@ -2,12 +2,12 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { ToggleControl, PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { withDispatch, select, subscribe } from '@wordpress/data';
-import { escapeEditableHTML } from '@wordpress/escape-html';
 import { cleanForSlug } from '@wordpress/url';
 
 const Sidebar = ( props ) => {
 	const [ isFullScreen, setIsFullScreen ] = useState( false );
 	const [ adminSlug, setAdminSlug ] = useState( 'insta-admin' );
+	const [ adminMenuTitle, setAdminMenuTitle ] = useState( __( 'Site Features', 'insta-admin-landing-page' ) );
 
 	/* Subscribe to post updates and update the slug */
 	subscribe( () => {
@@ -51,6 +51,14 @@ const Sidebar = ( props ) => {
 		} else {
 			setAdminSlug( meta._ialp_slug );
 		}
+
+		// Set admin title.
+		if ( meta._ialp_menu_title === null || typeof ( meta._ialp_menu_title ) === 'undefined' ) {
+			props.setMetaFieldValue( '_ialp_menu_title', __( 'Site Features', 'insta-admin-landing-page' ) );
+			setAdminMenuTitle( __( 'Site Features', 'insta-admin-landing-page' ) );
+		} else {
+			setAdminMenuTitle( meta._ialp_menu_title );
+		}
 	}, [] );
 
 	return (
@@ -78,6 +86,17 @@ const Sidebar = ( props ) => {
 							props.setMetaFieldValue( '_ialp_slug', cleanForSlug( value ) );
 						} }
 						help={ __( 'Set the slug for the landing page.', 'insta-admin-landing-page' ) }
+					/>
+				</PanelRow>
+				<PanelRow>
+					<TextControl
+						label={ __( 'Menu Title', 'insta-admin-landing-page' ) }
+						value={ adminMenuTitle }
+						onChange={ ( value ) => {
+							setAdminMenuTitle( value );
+							props.setMetaFieldValue( '_ialp_menu_title', value );
+						} }
+						help={ __( 'Set the menu title used in the admin sidebar.', 'insta-admin-landing-page' ) }
 					/>
 				</PanelRow>
 			</PanelBody>

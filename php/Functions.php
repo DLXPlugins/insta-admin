@@ -135,6 +135,16 @@ class Functions {
 	 */
 	public static  function get_landing_page_menu_title() {
 		$landing_page_menu_title = __( 'Site Features', 'insta-admin-landing-page' );
+
+		// Try to get menu title from post meta.
+		$landing_page_id = Admin_Landing::get_landing_page_id();
+		if ( $landing_page_id ) {
+			$maybe_landing_page_menu_title = get_post_meta( $landing_page_id, '_ialp_menu_title', true );
+			if ( $maybe_landing_page_menu_title && ! empty( $maybe_landing_page_menu_title ) ) {
+				$landing_page_menu_title = $maybe_landing_page_menu_title;
+			}
+		}
+
 		/**
 		 * Filter the menu title for the admin landing page.
 		 *
