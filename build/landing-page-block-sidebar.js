@@ -20,6 +20,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/escape-html */ "@wordpress/escape-html");
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
@@ -34,11 +38,36 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 var Sidebar = function Sidebar(props) {
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     isFullScreen = _useState2[0],
     setIsFullScreen = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('insta-admin'),
+    _useState4 = _slicedToArray(_useState3, 2),
+    adminSlug = _useState4[0],
+    setAdminSlug = _useState4[1];
+
+  /* Subscribe to post updates and update the slug */
+  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.subscribe)(function () {
+    var currentPostId = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.select)('core/editor').getCurrentPostId();
+    var currentPost = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.select)('core').getEntityRecord('postType', 'insta_admin_landing', currentPostId);
+    var isSaving = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.select)('core/editor').isSavingPost();
+    // Update slug in the text control to match the saved slug in meta.
+    if (isSaving && currentPost && currentPost.status === 'private' && currentPost.modified_gmt !== currentPost.date_gmt) {
+      var meta = wp.data.select('core/editor').getEditedPostAttribute('meta');
+      if (typeof meta === 'undefined') {
+        return;
+      }
+
+      // Find and sanitize slug.
+      if (meta._ialp_slug !== null && typeof meta._ialp_slug !== 'undefined') {
+        setAdminSlug((0,_wordpress_url__WEBPACK_IMPORTED_MODULE_5__.cleanForSlug)(meta._ialp_slug));
+      }
+    }
+  });
 
   /* Initialize the initial state */
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
@@ -55,8 +84,19 @@ var Sidebar = function Sidebar(props) {
     } else {
       setIsFullScreen(meta._ialp_full_screen);
     }
+
+    // Set admin slug.
+    if (meta._ialp_slug === null || typeof meta._ialp_slug === 'undefined') {
+      props.setMetaFieldValue('_ialp_slug', 'insta-admin');
+      setAdminSlug('insta-admin');
+    } else {
+      setAdminSlug(meta._ialp_slug);
+    }
   }, []);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    initialOpen: true,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Appearance', 'quotes-dlx')
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Full Screen Admin', 'insta-admin-landing-page'),
     checked: isFullScreen,
     onChange: function onChange(value) {
@@ -64,7 +104,18 @@ var Sidebar = function Sidebar(props) {
       props.setMetaFieldValue('_ialp_full_screen', value);
     },
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Make the admin panel full screen.', 'insta-admin-landing-page')
-  }));
+  }))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    initialOpen: true,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Settings', 'quotes-dlx')
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Landing Page Slug', 'insta-admin-landing-page'),
+    value: adminSlug,
+    onChange: function onChange(value) {
+      setAdminSlug(value);
+      props.setMetaFieldValue('_ialp_slug', (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_5__.cleanForSlug)(value));
+    },
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Set the slug for the landing page.', 'insta-admin-landing-page')
+  }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.withDispatch)(function (dispatch) {
   return {
@@ -118,6 +169,16 @@ module.exports = window["wp"]["element"];
 
 /***/ }),
 
+/***/ "@wordpress/escape-html":
+/*!************************************!*\
+  !*** external ["wp","escapeHtml"] ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["escapeHtml"];
+
+/***/ }),
+
 /***/ "@wordpress/i18n":
 /*!******************************!*\
   !*** external ["wp","i18n"] ***!
@@ -135,6 +196,16 @@ module.exports = window["wp"]["i18n"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["plugins"];
+
+/***/ }),
+
+/***/ "@wordpress/url":
+/*!*****************************!*\
+  !*** external ["wp","url"] ***!
+  \*****************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["url"];
 
 /***/ })
 
@@ -226,18 +297,24 @@ __webpack_require__.r(__webpack_exports__);
 
 (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('insta-admin-landing-page-options', {
   icon: /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 64 64",
+    viewBox: "0 0 2134 2134",
+    xmlns: "http://www.w3.org/2000/svg",
+    xmlSpace: "preserve",
     width: 24,
-    height: 24,
-    fill: "none",
-    xmlns: "http://www.w3.org/2000/svg"
+    height: 24
   }, /*#__PURE__*/React.createElement("path", {
-    d: "M32.868 4c2.215 0 4.43.23 6.645.918a14.78 14.78 0 0 1 5.13 2.754c1.515 1.262 2.565 2.869 3.38 4.705.817 2.18 1.283 4.36 1.167 6.656 0 2.18-.467 4.246-1.516 6.197-.933 1.72-2.332 3.213-4.197 4.13 2.565.919 4.78 2.755 6.296 4.935 1.632 2.64 2.331 5.623 2.215 8.721 0 5.509-1.633 9.755-5.014 12.623C43.594 58.51 39.047 60 33.218 60H12V4h20.868Zm-10.26 9.525v12.164h9.677c1.749.114 3.498-.345 4.897-1.378 1.165-.918 1.748-2.524 1.748-4.82 0-2.294-.583-3.9-1.748-4.819-1.516-1.033-3.381-1.492-5.13-1.377l-9.443.23Zm0 21.803V50.36h9.677c3.265 0 5.713-.689 7.112-1.951 1.515-1.492 2.215-3.557 2.098-5.623.117-2.066-.583-4.131-2.098-5.623-1.4-1.262-3.73-1.95-7.112-1.95l-9.676.114Z",
-    fill: "#3243B2"
+    d: "M1655.89 830.429c-12.267-19.066-33.334-30.4-55.867-30.4h-466.667V66.696c0-31.467-22-58.667-52.8-65.2-31.333-6.667-62 9.466-74.8 38.133l-533.333 1200c-9.2 20.534-7.2 44.534 5.066 63.333 12.267 18.934 33.334 30.4 55.867 30.4h466.667v733.334c0 31.466 22 58.666 52.8 65.2 4.666.933 9.333 1.467 13.866 1.467 25.867 0 50-15.067 60.934-39.601l533.333-1200c9.067-20.667 7.333-44.401-5.066-63.334Z",
+    style: {
+      fill: '#ffc107',
+      fillRule: 'nonzero'
+    }
   })),
   render: function render() {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginDocumentSettingPanel, {
-      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Admin Page Options', 'insta-admin-landing-page')
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginSidebarMoreMenuItem, {
+      target: "insta-admin-landing-sidebar"
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('InstaAdmin Options', 'insta-admin-landing-page')), /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginSidebar, {
+      name: "insta-admin-landing-sidebar",
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('InstaAdmin Options', 'insta-admin-landing-page')
     }, /*#__PURE__*/React.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
   }
 });

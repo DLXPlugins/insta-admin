@@ -1,10 +1,32 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
-import { ToggleControl } from '@wordpress/components';
-import { withDispatch } from '@wordpress/data';
+import { ToggleControl, PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import { withDispatch, select, subscribe } from '@wordpress/data';
+import { escapeEditableHTML } from '@wordpress/escape-html';
+import { cleanForSlug } from '@wordpress/url';
 
 const Sidebar = ( props ) => {
 	const [ isFullScreen, setIsFullScreen ] = useState( false );
+	const [ adminSlug, setAdminSlug ] = useState( 'insta-admin' );
+
+	/* Subscribe to post updates and update the slug */
+	subscribe( () => {
+		const currentPostId = select( 'core/editor' ).getCurrentPostId();
+		const currentPost = select( 'core' ).getEntityRecord( 'postType', 'insta_admin_landing', currentPostId );
+		const isSaving = select( 'core/editor' ).isSavingPost();
+		// Update slug in the text control to match the saved slug in meta.
+		if ( isSaving && currentPost && currentPost.status === 'private' && currentPost.modified_gmt !== currentPost.date_gmt ) {
+			const meta = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'meta' );
+			if ( typeof ( meta ) === 'undefined' ) {
+				return;
+			}
+
+			// Find and sanitize slug.
+			if ( meta._ialp_slug !== null && typeof ( meta._ialp_slug ) !== 'undefined' ) {
+				setAdminSlug( cleanForSlug( meta._ialp_slug ) );
+			}
+		}
+	} );
 
 	/* Initialize the initial state */
 	useEffect( () => {
@@ -21,19 +43,44 @@ const Sidebar = ( props ) => {
 		} else {
 			setIsFullScreen( meta._ialp_full_screen );
 		}
+
+		// Set admin slug.
+		if ( meta._ialp_slug === null || typeof ( meta._ialp_slug ) === 'undefined' ) {
+			props.setMetaFieldValue( '_ialp_slug', 'insta-admin' );
+			setAdminSlug( 'insta-admin' );
+		} else {
+			setAdminSlug( meta._ialp_slug );
+		}
 	}, [] );
 
 	return (
 		<>
-			<ToggleControl
-				label={ __( 'Full Screen Admin', 'insta-admin-landing-page' ) }
-				checked={ isFullScreen }
-				onChange={ ( value ) => {
-					setIsFullScreen( value );
-					props.setMetaFieldValue( '_ialp_full_screen', value );
-				} }
-				help={ __( 'Make the admin panel full screen.', 'insta-admin-landing-page' ) }
-			/>
+			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'quotes-dlx' ) }>
+				<PanelRow>
+					<ToggleControl
+						label={ __( 'Full Screen Admin', 'insta-admin-landing-page' ) }
+						checked={ isFullScreen }
+						onChange={ ( value ) => {
+							setIsFullScreen( value );
+							props.setMetaFieldValue( '_ialp_full_screen', value );
+						} }
+						help={ __( 'Make the admin panel full screen.', 'insta-admin-landing-page' ) }
+					/>
+				</PanelRow>
+			</PanelBody>
+			<PanelBody initialOpen={ true } title={ __( 'Settings', 'quotes-dlx' ) }>
+				<PanelRow>
+					<TextControl
+						label={ __( 'Landing Page Slug', 'insta-admin-landing-page' ) }
+						value={ adminSlug }
+						onChange={ ( value ) => {
+							setAdminSlug( value );
+							props.setMetaFieldValue( '_ialp_slug', cleanForSlug( value ) );
+						} }
+						help={ __( 'Set the slug for the landing page.', 'insta-admin-landing-page' ) }
+					/>
+				</PanelRow>
+			</PanelBody>
 		</>
 	);
 };

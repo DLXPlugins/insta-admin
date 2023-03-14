@@ -498,7 +498,9 @@ class Admin_Landing {
 		global $current_screen;
 		if ( null !== $current_screen ) {
 
-			if ( 'insta_admin_landing' === $current_screen->post_type || 'settings_page_insta-admin' === $current_screen->id || Functions::get_landing_page_slug() === $current_screen->id ) {
+			$insta_admin_slug = Functions::get_landing_page_slug();
+
+			if ( 'insta_admin_landing' === $current_screen->post_type || 'settings_page_' . $insta_admin_slug === $current_screen->id || Functions::get_landing_page_slug() === $current_screen->id ) {
 				$stylesheet_dir = Functions::get_plugin_dir( '/assets/json/' );
 			}
 		}
@@ -634,21 +636,21 @@ class Admin_Landing {
 		);
 
 		/**
-		 * Meta for enabling full screen view..
+		 * Meta for setting a admin landing page slug.
 		 */
-		// register_post_meta(
-		// 'page',
-		// '_bl_nav_type', /* can be: main, alt */
-		// array(
-		// 'sanitize_callback' => 'sanitize_text_field',
-		// 'show_in_rest'      => true,
-		// 'type'              => 'string',
-		// 'auth_callback'     => function () {
-		// return current_user_can( 'edit_posts' );
-		// },
-		// 'single'            => true,
-		// 'default'           => 'main',
-		// )
-		// );
+		register_post_meta(
+			'insta_admin_landing',
+			'_ialp_slug',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => true,
+				'type'              => 'string',
+				'auth_callback'     => function () {
+					return current_user_can( 'manage_options' );
+				},
+				'single'            => true,
+				'default'           => 'insta-admin',
+			)
+		);
 	}
 }

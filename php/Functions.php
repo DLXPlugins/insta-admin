@@ -91,6 +91,16 @@ class Functions {
 		if ( $context ) {
 			$landing_page_slug .= '_' . $context;
 		}
+
+		// Try to get slug from post meta.
+		$landing_page_id = Admin_Landing::get_landing_page_id();
+		if ( $landing_page_id ) {
+			$maybe_landing_page_slug = get_post_meta( $landing_page_id, '_ialp_slug', true );
+			if ( $maybe_landing_page_slug && ! empty( $maybe_landing_page_slug ) ) {
+				$landing_page_slug = $maybe_landing_page_slug;
+			}
+		}
+
 		/**
 		 * Filter the slug for the admin landing page.
 		 *
@@ -98,7 +108,7 @@ class Functions {
 		 *
 		 * @param string $landing_page_slug The slug for the admin landing page.
 		 */
-		$landing_page_slug = apply_filters( 'insta_admin_landing_page_slug', $landing_page_slug );
+		$landing_page_slug = apply_filters( 'ialp_slug', $landing_page_slug );
 
 		return $landing_page_slug;
 	}
@@ -115,7 +125,7 @@ class Functions {
 		 *
 		 * @param string $landing_page_title The title for the admin landing page.
 		 */
-		$landing_page_title = apply_filters( 'insta_admin_landing_page_title', $landing_page_title );
+		$landing_page_title = apply_filters( 'ialp_title', $landing_page_title );
 
 		return $landing_page_title;
 	}
@@ -132,7 +142,7 @@ class Functions {
 		 *
 		 * @param string $landing_page_menu_title The menu title for the admin landing page.
 		 */
-		$landing_page_menu_title = apply_filters( 'insta_admin_landing_page_menu_title', $landing_page_menu_title );
+		$landing_page_menu_title = apply_filters( 'ialp_menu_title', $landing_page_menu_title );
 
 		return $landing_page_menu_title;
 	}
