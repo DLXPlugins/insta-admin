@@ -42,6 +42,34 @@ class Functions {
 	}
 
 	/**
+	 * Tell whether we're in the landing page or not.
+	 *
+	 * @return bool true of on landing page, false if not.
+	 */
+	public static function is_landing_page() {
+		$current_page = filter_input( INPUT_GET, 'page', FILTER_DEFAULT );
+		if ( self::get_landing_page_slug() === $current_page ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Tell whether we're in the landing page post editor.
+	 *
+	 * @return bool true of on landing page editor, false if not.
+	 */
+	public static function is_landing_page_editor() {
+		if ( is_admin() ) {
+			$current_page = (int) filter_input( INPUT_GET, 'post', FILTER_DEFAULT );
+			if ( Admin_Landing::get_landing_page_id() === $current_page ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Sanitize an attribute based on type.
 	 *
 	 * @param array  $attributes Array of attributes.
