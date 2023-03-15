@@ -296,6 +296,24 @@ class Admin_Landing {
 			Functions::get_plugin_version(),
 			true
 		);
+
+		// Add localized vars.
+		wp_localize_script(
+			'insta-admin-landing-page-sidebar',
+			'instaAdminLandingPageSidebar',
+			array(
+				'colorPalette' => Colors::get_color_palette(),
+			)
+		);
+
+		// Enqueue editor styles.
+		wp_enqueue_style(
+			'insta-admin-landing-page-block-editor',
+			Functions::get_plugin_url( '/dist/insta-admin-block-editor.css' ),
+			array(),
+			Functions::get_plugin_version(),
+			'all'
+		);
 	}
 
 	/**
@@ -682,6 +700,24 @@ class Admin_Landing {
 				},
 				'single'            => true,
 				'default'           => __( 'Site Features', 'insta-admin-landing-page' ),
+			)
+		);
+
+		/**
+		 * Meta for setting the background color of the admin landing page.
+		 */
+		register_post_meta(
+			'insta_admin_landing',
+			'_ialp_background_color',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => true,
+				'type'              => 'string',
+				'auth_callback'     => function () {
+					return current_user_can( 'manage_options' );
+				},
+				'single'            => true,
+				'default'           => '#f0f0f1',
 			)
 		);
 	}

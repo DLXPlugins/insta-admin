@@ -3,11 +3,13 @@ import { useState, useEffect } from '@wordpress/element';
 import { ToggleControl, PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { withDispatch, select, subscribe } from '@wordpress/data';
 import { cleanForSlug } from '@wordpress/url';
+import ColorPicker from '../../react/components/ColorPicker';
 
 const Sidebar = ( props ) => {
 	const [ isFullScreen, setIsFullScreen ] = useState( false );
 	const [ adminSlug, setAdminSlug ] = useState( 'insta-admin' );
 	const [ adminMenuTitle, setAdminMenuTitle ] = useState( __( 'Site Features', 'insta-admin-landing-page' ) );
+	const [ adminBackgroundColor, setAdminBackgroundColor ] = useState( '#f0f0f1' );
 
 	/* Subscribe to post updates and update the slug */
 	subscribe( () => {
@@ -59,8 +61,17 @@ const Sidebar = ( props ) => {
 		} else {
 			setAdminMenuTitle( meta._ialp_menu_title );
 		}
+
+		// Set background color.
+		if ( meta._ialp_background_color === null || typeof ( meta._ialp_background_color ) === 'undefined' ) {
+			props.setMetaFieldValue( '_ialp_background_color', '#f0f0f1' );
+			setAdminBackgroundColor( '#f0f0f1' );
+		} else {
+			setAdminBackgroundColor( meta._ialp_background_color );
+		}
 	}, [] );
 
+	console.log(  instaAdminLandingPageSidebar.colorPalette );
 	return (
 		<>
 			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'quotes-dlx' ) }>
@@ -97,6 +108,20 @@ const Sidebar = ( props ) => {
 							props.setMetaFieldValue( '_ialp_menu_title', value );
 						} }
 						help={ __( 'Set the menu title used in the admin sidebar.', 'insta-admin-landing-page' ) }
+					/>
+				</PanelRow>
+				<PanelRow>
+					<ColorPicker
+						value={ adminBackgroundColor }
+						key={ 'admin-background-color' }
+						onChange={ ( slug, newValue ) => {
+							setAdminBackgroundColor( newValue );
+							props.setMetaFieldValue( '_ialp_background_color', newValue );
+						} }
+						label={ __( 'Background Color', 'highlight-and-share' ) }
+						defaultColors={ instaAdminLandingPageSidebar.colorPalette }
+						defaultColor={ adminBackgroundColor }
+						slug={ 'admin-background-color' }
 					/>
 				</PanelRow>
 			</PanelBody>

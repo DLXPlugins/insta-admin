@@ -1,0 +1,7 @@
+@import 'breakpoints-mixin.scss';
+@import 'common.scss';
+
+/* Core Paragraph Styles */
+p[data-type="core/paragraph"].wp-block-paragraph {
+	padding: unset;
+}

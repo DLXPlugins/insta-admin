@@ -35,12 +35,18 @@ class Colors {
 	}
 
 	/**
-	 * Add the color scheme palette for the block editor.
+	 * Retrieve a color palette for the admin landing page and block editor.
+	 *
+	 * @param bool $skip_filters true to return unfiltered results, false to apply filters.
+	 *
+	 * @return array {
+	 *  The color palette.
+	 *  @type string $name The name of the color.
+	 *  @type string $slug The slug of the color.
+	 *  @type string $color The color.
+	 * }
 	 */
-	public function add_color_palette() {
-		if ( ! Functions::is_landing_page() && ! Functions::is_landing_page_editor() ) {
-			return;
-		}
+	public static function get_color_palette( $skip_filters = false ) {
 		// Retrieve user's admin color scheme.
 		$admin_color_scheme = get_user_option( 'admin_color' );
 
@@ -125,17 +131,34 @@ class Colors {
 			'color' => '#FFFFFF',
 		);
 
-		/**
-		 * Filter the color palette array.
-		 *
-		 * @param array $color_palette {
-		 *      The color palette.
-		 *      @type string $name The name of the color.
-		 *      @type string $slug The slug of the color.
-		 *      @type string $color The color.
-		 * }
-		 */
-		$color_palette = apply_filters( 'ialp_block_color_palette', $color_palette );
+		// Return filtered or unfiltered.
+		if ( ! $skip_filters ) {
+			/**
+			 * Filter the color palette array.
+			 *
+			 * @param array $color_palette {
+			 *      The color palette.
+			 *      @type string $name The name of the color.
+			 *      @type string $slug The slug of the color.
+			 *      @type string $color The color.
+			 * }
+			 */
+			$color_palette = apply_filters( 'ialp_block_color_palette', $color_palette );
+		}
+
+		return $color_palette;
+	}
+
+	/**
+	 * Add the color scheme palette for the block editor.
+	 */
+	public function add_color_palette() {
+		if ( ! Functions::is_landing_page() && ! Functions::is_landing_page_editor() ) {
+			return;
+		}
+
+		// Retrieve color palette.
+		$color_palette = self::get_color_palette();
 
 		// Add theme support for the colors.
 		add_theme_support( 'editor-color-palette', $color_palette );

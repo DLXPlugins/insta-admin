@@ -16,6 +16,7 @@ module.exports = ( env ) => {
 		{
 			entry: {
 				'insta-admin-landing-page': [ './src/scss/admin-landing.scss' ],
+				'insta-admin-block-editor': [ './src/scss/admin-block-editor.scss' ],
 			},
 			mode: env.mode,
 			devtool: 'production' === env.mode ? false : 'source-map',
