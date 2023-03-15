@@ -79,13 +79,36 @@ class Insta_Admin_DLX {
 			$generate_blocks->run();
 		}
 
+		// Check to see if Kadence Blocks is enabled and include compatibility.
+		if ( Functions::is_activated( 'kadence-blocks/kadence-blocks.php' ) ) {
+			$kadence_blocks = new Compatibility\Kadence_Blocks();
+			$kadence_blocks->run();
+		}
+
 	}
 }
 
-add_action( 'plugins_loaded', 'DLXPlugins\InstaAdmin\instaadmindlx_instantiate' );
+add_action( 'plugins_loaded', 'DLXPlugins\InstaAdmin\instaadmindlx_instantiate', 11 );
 /**
  * Instantiate the HAS class.
  */
 function instaadmindlx_instantiate() {
 	Insta_Admin_DLX::get_instance();
 }
+
+/**
+ * Custom the_content filter to avoid running into conflicts.
+ */
+global $wp_embed;
+add_filter( 'ialp_the_content', array( $wp_embed, 'run_shortcode' ), 8 );
+add_filter( 'ialp_the_content', array( $wp_embed, 'autoembed' ), 8 );
+add_filter( 'ialp_the_content', 'do_blocks', 9 );
+add_filter( 'ialp_the_content', 'wptexturize' );
+add_filter( 'ialp_the_content', 'convert_smilies', 20 );
+add_filter( 'ialp_the_content', 'wpautop' );
+add_filter( 'ialp_the_content', 'shortcode_unautop' );
+add_filter( 'ialp_the_content', 'prepend_attachment' );
+add_filter( 'ialp_the_content', 'wp_filter_content_tags' );
+add_filter( 'ialp_the_content', 'wp_replace_insecure_home_url' );
+add_filter( 'ialp_the_content', 'do_shortcode', 11 );
+add_filter( 'ialp_the_content', 'capital_P_dangit', 11 );

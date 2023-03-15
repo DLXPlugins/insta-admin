@@ -396,18 +396,27 @@ class Admin_Landing {
 		 */
 		do_action( 'ialp_pre_landing_page_html' );
 
-		// Output the landing page.
-		$landing_page_content = apply_filters( 'the_content', $landing_page->post_content );
+		$use_wp_content_filter = apply_filters( 'ialp_use_wp_content_filter', true );
+		if ( ! $use_wp_content_filter ) {
+			$landing_page_content = apply_filters( 'ialp_the_content', $landing_page->post_content );
+		} else {
+			$landing_page_content = apply_filters( 'the_content', $landing_page->post_content );
+		}
+
 		?>
 		<div id="insta-admin-landing-page" class="insta-admin-landing-page-wrap">
 			<div class="insta-admin-landing-page-content">
 				<?php
 				// todo - needs kses update.
-				echo wp_kses_post( $landing_page_content );
+				echo $landing_page_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 			</div>
 		</div>
 		<?php
+		/**
+		 * Fires after the landing page HTML is output. Useful for enqueuing scripts/styles for both fullscreen and regular view.
+		 */
+		do_action( 'ialp_after_landing_page_html' );
 	}
 
 	/**
