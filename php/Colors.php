@@ -73,6 +73,58 @@ class Colors {
 			}
 		}
 
+		// Add in the remainer of colors.
+		$color_palette[] = array(
+			'name'  => 'Honolulu Blue',
+			'slug'  => 'honolulu-blue',
+			'color' => '#0073AA',
+		);
+		$color_palette[] = array(
+			'name'  => 'Steel Blue',
+			'slug'  => 'steel-blue',
+			'color' => '#2C82C9',
+		);
+		$color_palette[] = array(
+			'name'  => 'Alice Blue',
+			'slug'  => 'alice-blue',
+			'color' => '#E5F6FF',
+		);
+		$color_palette[] = array(
+			'name'  => 'Jet Black',
+			'slug'  => 'jet-black',
+			'color' => '#333333',
+		);
+		$color_palette[] = array(
+			'name'  => 'White Smoke',
+			'slug'  => 'white-smoke',
+			'color' => '#F3F3F3',
+		);
+		$color_palette[] = array(
+			'name'  => 'Pantone Orange',
+			'slug'  => 'pantone-orange',
+			'color' => '#F26622',
+		);
+		$color_palette[] = array(
+			'name'  => 'Forest Green',
+			'slug'  => 'forest-green',
+			'color' => '#009933',
+		);
+		$color_palette[] = array(
+			'name'  => 'Red Orange',
+			'slug'  => 'red-orange',
+			'color' => '#D54E21',
+		);
+		$color_palette[] = array(
+			'name'  => 'Black',
+			'slug'  => 'black',
+			'color' => '#000000',
+		);
+		$color_palette[] = array(
+			'name'  => 'White',
+			'slug'  => 'white',
+			'color' => '#FFFFFF',
+		);
+
 		/**
 		 * Filter the color palette array.
 		 *
