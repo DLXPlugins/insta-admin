@@ -2,7 +2,7 @@
 
 /*
  * Plugin Name: InstaAdmin Landing Page
- * Plugin URI: https://dlxplugins.com/plugins/instant-admin-landing-page/
+ * Plugin URI: https://dlxplugins.com/plugins/instaadmin/
  * Description: Create an admin landing page using blocks.
  * Author: DLX Plugins
  * Version: 1.0.0
@@ -11,8 +11,7 @@
  * Author URI: https://dlxplugins.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: highlight-and-share
- * Contributors: ronalfy
+ * Text Domain: insta-admin
  */
 
 namespace DLXPlugins\InstaAdmin;
