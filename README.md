@@ -1,5 +1,7 @@
 # InstaAdmin Landing Page
 
+View <a href="https://dlxplugins.com/plugins/instaadmin/">the InstaAdmin Landing Page</a> for a live demo.
+
 ## Developers
 
 The plugin works by creating a hidden post type and allowing you to edit one post in the block editor.
