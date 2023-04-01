@@ -13,11 +13,11 @@ Fixes # (issue)
 
 ### Where is the Bug? (please remove if not relevant)
 
-- [ ] Click to Share Block
+- [ ] Block editor post edit screen
+- [ ] Admin landing settings page
 - [ ] Admin settings
-- [ ] Inline highlighting
-- [ ] Highlighting Text
-- [ ] Social Sharing
+- [ ] Menu bar item
+- [ ] Other
 
 # How Has This Been Tested (please remove if not relevant)?
 
