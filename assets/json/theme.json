@@ -263,9 +263,10 @@
 					}
 				},
 				"typography": {
-					"fontSize": "clamp( 1.6rem, calc(1.5vw + 1rem), 1.8rem )",
-					"lineHeight": "clamp( 1.8rem, calc(1.5vw + 1rem), 2rem )",
-					"fontWeight": "400"
+					"fontSize": "clamp( 1.2rem, calc(1.5vw + 1rem), 1.4rem )",
+					"lineHeight": "clamp( 1.3rem, calc(1.5vw + 1rem), 1.5rem )",
+					"fontWeight": "400",
+					"fontFamily": "Lato"
 				}
 			},
 			"core/pullquote": {
