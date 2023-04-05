@@ -270,6 +270,22 @@ class Admin_Landing {
 			'all'
 		);
 
+		// Enqueue web fonts.
+		wp_enqueue_style(
+			'insta-admin-font-ubuntu',
+			Functions::get_plugin_url( '/dist/insta-gfont-ubuntu.css' ),
+			array(),
+			Functions::get_plugin_version(),
+			'all'
+		);
+		wp_enqueue_style(
+			'insta-admin-font-lato',
+			Functions::get_plugin_url( '/dist/insta-gfont-lato.css' ),
+			array(),
+			Functions::get_plugin_version(),
+			'all'
+		);
+
 		/**
 		 * Fires when the admin landing page enqueue scripts.
 		 *
@@ -310,6 +326,21 @@ class Admin_Landing {
 		wp_enqueue_style(
 			'insta-admin-landing-page-block-editor',
 			Functions::get_plugin_url( '/dist/insta-admin-block-editor.css' ),
+			array(),
+			Functions::get_plugin_version(),
+			'all'
+		);
+		// Enqueue web fonts.
+		wp_enqueue_style(
+			'insta-admin-font-ubuntu',
+			Functions::get_plugin_url( '/dist/insta-gfont-ubuntu.css' ),
+			array(),
+			Functions::get_plugin_version(),
+			'all'
+		);
+		wp_enqueue_style(
+			'insta-admin-font-lato',
+			Functions::get_plugin_url( '/dist/insta-gfont-lato.css' ),
 			array(),
 			Functions::get_plugin_version(),
 			'all'

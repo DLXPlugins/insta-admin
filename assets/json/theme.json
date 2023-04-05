@@ -71,46 +71,24 @@
 				{
 					"fontFamily": "\"Ubuntu\", serif",
 					"name": "Ubuntu",
-					"slug": "ubuntu",
-					"fontFace": [
-						{
-							"fontFamily": "Ubuntu",
-							"fontWeight": "300",
-							"fontStyle": "italic",
-							"fontStretch": "normal",
-							"src": [ "file:../fonts/ubuntu-v20-latin-300italic.woff2" ]
-						},
-						{
-							"fontFamily": "Ubuntu",
-							"fontWeight": "400",
-							"fontStyle": "normal",
-							"fontStretch": "normal",
-							"src": [ "file:../fonts/ubuntu-v20-latin-regular.woff2" ]
-						},
-						{
-							"fontFamily": "Ubuntu",
-							"fontWeight": "400",
-							"fontStyle": "italic",
-							"fontStretch": "normal",
-							"src": [ "file:../fonts/ubuntu-v20-latin-italic.woff2" ]
-						},
-						{
-							"fontFamily": "Ubuntu",
-							"fontWeight": "500",
-							"fontStyle": "normal",
-							"fontStretch": "normal",
-							"src": [ "file:./assets/fonts/ubuntu-v20-latin-500.woff2" ]
-						},
-						{
-							"fontFamily": "Ubuntu",
-							"fontWeight": "700",
-							"fontStyle": "normal",
-							"fontStretch": "normal",
-							"src": [ "file:../fonts/ubuntu-v20-latin-700.woff2" ]
-						}
-					]
+					"slug": "ubuntu"
+				},
+				{
+					"fontFamily": "\"Lato\", serif",
+					"name": "Lato",
+					"slug": "lato"
 				}
 			]
+		},
+		"custom": {
+			"typography": {
+				"line-height": {
+					"tiny": 1.15,
+					"small": 1.2,
+					"medium": 1.4,
+					"normal": 1.6
+				}
+			}
 		},
 		"spacing": {
 			"margin": true,
@@ -264,9 +242,9 @@
 			"text": "var(--wp--preset--color--foreground)"
 		},
 		"typography": {
-			"fontSize": "22.5px",
-			"lineHeight": "40px",
-			"fontWeight": "300"
+			"fontFamily": "var(--wp--preset--font-family--lato)",
+			"lineHeight": "var(--wp--custom--typography--line-height--normal)",
+			"fontSize": "var(--wp--preset--font-size--medium)"
 		},
 		"blocks": {
 			"core/paragraph": {

@@ -17,6 +17,8 @@ module.exports = ( env ) => {
 			entry: {
 				'insta-admin-landing-page': [ './src/scss/admin-landing.scss' ],
 				'insta-admin-block-editor': [ './src/scss/admin-block-editor.scss' ],
+				'insta-gfont-ubuntu': { import: './src/scss/fonts/ubuntu.scss' },
+				'insta-gfont-lato': { import: './src/scss/fonts/lato.scss' },
 			},
 			mode: env.mode,
 			devtool: 'production' === env.mode ? false : 'source-map',
