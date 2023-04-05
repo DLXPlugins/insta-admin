@@ -3495,7 +3495,8 @@ div.components-toolbar > div + div.has-left-divider::before {
   padding-left: 0 !important;
   padding-right: 0 !important;
   position: relative;
-  background-color: #ebebeb;
+  background-color: var(--wp--preset--color--background, #ebebeb);
+  color: var(--wp--preset--color--foreground, #333);
 }
 
 #wpbody-content {

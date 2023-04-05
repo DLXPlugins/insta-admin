@@ -79,6 +79,18 @@ class Colors {
 			}
 		}
 
+		// Add in background and foreground colors.
+		$color_palette[] = array(
+			'name'  => 'Background',
+			'slug'  => 'background',
+			'color' => '#ebebeb',
+		);
+		$color_palette[] = array(
+			'name'  => 'Foreground',
+			'slug'  => 'foreground',
+			'color' => '#333',
+		);
+
 		// Add in the remainer of colors.
 		$color_palette[] = array(
 			'name'  => 'Honolulu Blue',
