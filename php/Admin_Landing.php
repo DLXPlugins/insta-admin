@@ -205,10 +205,10 @@ class Admin_Landing {
 	 * Modify the path of the stylesheet directory for theme.json.
 	 */
 	public function conditional_theme_json_init() {
-		add_filter( 'stylesheet_directory', array( static::class, 'load_plugin_theme_json' ), 10, 1 );
+		add_filter( 'stylesheet_directory', array( static::class, 'load_plugin_theme_json' ), 1000, 1 );
 
 		// Only if you need a parent > child theme.json.
-		add_filter( 'template_directory', array( static::class, 'load_plugin_theme_json' ), 10, 1 );
+		add_filter( 'template_directory', array( static::class, 'load_plugin_theme_json' ), 1000, 1 );
 
 		// Clean the theme.json cache if on the landing page settings screen or in the landing page editor.
 		$can_clear_theme_json_cache = false;
@@ -226,6 +226,8 @@ class Admin_Landing {
 			}
 		}
 		if ( $can_clear_theme_json_cache ) {
+			add_theme_support( 'wp-block-styles' );
+			add_editor_style( 'style.css' );
 			\WP_Theme_JSON_Resolver::clean_cached_data();
 		}
 	}
@@ -249,6 +251,18 @@ class Admin_Landing {
 		if ( ! $is_settings_page && ! $is_settings_dashboard_page ) {
 			return;
 		}
+
+		// Enqueue WordPress block styles.
+		wp_enqueue_style(
+			'block-library',
+			includes_url( 'css/dist/block-library/style.css' ),
+			array(),
+			Functions::get_plugin_version(),
+			'all'
+		);
+
+		// Clear cached data to retrieve updated theme.json file.
+		\WP_Theme_JSON_Resolver::clean_cached_data();
 
 		// Enqueue theme.json assets.
 		$tree       = \WP_Theme_JSON_Resolver::get_merged_data();
@@ -345,6 +359,8 @@ class Admin_Landing {
 			Functions::get_plugin_version(),
 			'all'
 		);
+		// Clear cached data to retrieve updated theme.json file.
+		\WP_Theme_JSON_Resolver::clean_cached_data();
 	}
 
 	/**
