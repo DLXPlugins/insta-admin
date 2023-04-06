@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
-import { ToggleControl, PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import { ToggleControl, PanelBody, PanelRow, TextControl, Button } from '@wordpress/components';
 import { withDispatch, select, subscribe } from '@wordpress/data';
 import { cleanForSlug } from '@wordpress/url';
 import ColorPicker from '../../react/components/ColorPicker';
@@ -71,7 +71,6 @@ const Sidebar = ( props ) => {
 		}
 	}, [] );
 
-	console.log(  instaAdminLandingPageSidebar.colorPalette );
 	return (
 		<>
 			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'quotes-dlx' ) }>
@@ -123,6 +122,19 @@ const Sidebar = ( props ) => {
 						defaultColor={ adminBackgroundColor }
 						slug={ 'admin-background-color' }
 					/>
+				</PanelRow>
+			</PanelBody>
+			<PanelBody initialOpen={ true } title={ __( 'Preview', 'quotes-dlx' ) }>
+				<PanelRow>
+					<Button
+						variant="tertiary"
+						className="instaadmin-view-landing-button"
+						href={ instaAdminLandingPageSidebar.landingPageUrl }
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{ __( 'View Landing Page', 'instaadmin' ) }
+					</Button>
 				</PanelRow>
 			</PanelBody>
 		</>

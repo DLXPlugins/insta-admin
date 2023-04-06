@@ -1,6 +1,33 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/plugins/landing/sidebar-view-landing.js":
+/*!*****************************************************!*\
+  !*** ./src/plugins/landing/sidebar-view-landing.js ***!
+  \*****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var SidebarViewLanding = function SidebarViewLanding() {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    variant: "tertiary",
+    className: "instaadmin-view-landing-button",
+    href: instaAdminLandingPageSidebar.landingPageUrl,
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('View Landing Page', 'instaadmin')));
+};
+/* harmony default export */ __webpack_exports__["default"] = (SidebarViewLanding);
+
+/***/ }),
+
 /***/ "./src/plugins/landing/sidebar.js":
 /*!****************************************!*\
   !*** ./src/plugins/landing/sidebar.js ***!
@@ -113,7 +140,6 @@ var Sidebar = function Sidebar(props) {
       setAdminBackgroundColor(meta._ialp_background_color);
     }
   }, []);
-  console.log(instaAdminLandingPageSidebar.colorPalette);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     initialOpen: true,
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Appearance', 'quotes-dlx')
@@ -155,7 +181,16 @@ var Sidebar = function Sidebar(props) {
     defaultColors: instaAdminLandingPageSidebar.colorPalette,
     defaultColor: adminBackgroundColor,
     slug: 'admin-background-color'
-  }))));
+  }))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    initialOpen: true,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Preview', 'quotes-dlx')
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    variant: "tertiary",
+    className: "instaadmin-view-landing-button",
+    href: instaAdminLandingPageSidebar.landingPageUrl,
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('View Landing Page', 'instaadmin')))));
 };
 /* harmony default export */ __webpack_exports__["default"] = ((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.withDispatch)(function (dispatch) {
   return {
@@ -686,12 +721,14 @@ var __webpack_exports__ = {};
   \**************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sidebar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidebar */ "./src/plugins/landing/sidebar.js");
+/* harmony import */ var _sidebar_view_landing__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar-view-landing */ "./src/plugins/landing/sidebar-view-landing.js");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
 /* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
@@ -717,6 +754,27 @@ __webpack_require__.r(__webpack_exports__);
       name: "insta-admin-landing-sidebar",
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('InstaAdmin Options', 'insta-admin-landing-page')
     }, /*#__PURE__*/React.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
+  }
+});
+(0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__.registerPlugin)('insta-admin-landing-page-view', {
+  icon: /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 2134 2134",
+    xmlns: "http://www.w3.org/2000/svg",
+    xmlSpace: "preserve",
+    width: 24,
+    height: 24
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M1655.89 830.429c-12.267-19.066-33.334-30.4-55.867-30.4h-466.667V66.696c0-31.467-22-58.667-52.8-65.2-31.333-6.667-62 9.466-74.8 38.133l-533.333 1200c-9.2 20.534-7.2 44.534 5.066 63.333 12.267 18.934 33.334 30.4 55.867 30.4h466.667v733.334c0 31.466 22 58.666 52.8 65.2 4.666.933 9.333 1.467 13.866 1.467 25.867 0 50-15.067 60.934-39.601l533.333-1200c9.067-20.667 7.333-44.401-5.066-63.334Z",
+    style: {
+      fill: '#ffc107',
+      fillRule: 'nonzero'
+    }
+  })),
+  render: function render() {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginDocumentSettingPanel, {
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('InstaAdmin Options', 'insta-admin-landing-page'),
+      initialOpen: true
+    }, /*#__PURE__*/React.createElement(_sidebar_view_landing__WEBPACK_IMPORTED_MODULE_4__["default"], null)));
   }
 });
 }();

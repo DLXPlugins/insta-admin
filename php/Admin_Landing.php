@@ -332,7 +332,8 @@ class Admin_Landing {
 			'insta-admin-landing-page-sidebar',
 			'instaAdminLandingPageSidebar',
 			array(
-				'colorPalette' => Colors::get_color_palette(),
+				'colorPalette'   => Colors::get_color_palette(),
+				'landingPageUrl' => esc_url( admin_url( 'options-general.php?page=' . Functions::get_landing_page_slug() ) ),
 			)
 		);
 

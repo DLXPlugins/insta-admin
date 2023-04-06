@@ -316,22 +316,25 @@
 				}
 			},
 			"core/button": {
+				"border": {
+					"radius": "0"
+				},
+				"color": {
+					"background": "var( --wp--preset--color--honolulu-blue )",
+					"text": "var( --wp--preset--color--white )"
+				},
 				"spacing": {
 					"padding": {
 						"top": "18px",
 						"bottom": "18px",
 						"right": "20px",
 						"left": "20px"
-					},
-					"margin": {
-						"top": "20px",
-						"bottom": "20px"
 					}
 				},
 				"typography": {
-					"fontSize": "18px",
-					"fontFamily": "Raleway, sans-serif",
-					"lineHeight": "16px"
+					"fontSize": "clamp( 1.2rem, calc(1.5vw + 1rem), 1.4rem )",
+					"fontFamily": "var(--wp--preset--font-family--lato)",
+					"lineHeight": "clamp( 1.3rem, calc(1.5vw + 1rem), 1.5rem )"
 				}
 			}
 		}
